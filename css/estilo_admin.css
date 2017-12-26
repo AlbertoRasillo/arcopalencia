@@ -1,0 +1,9 @@
+body{
+	background: #cccc99;
+}
+#tabla tr:nth-child(2n+3) {background: #BDBDBD}
+#anadir{width: 15px;}
+#cuerpo{
+	position: relative;
+	margin-top: 70px;
+}

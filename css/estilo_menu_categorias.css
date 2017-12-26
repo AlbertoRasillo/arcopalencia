@@ -1,0 +1,28 @@
+#menu_cat{
+	position: absolute;
+	top: 10%;
+	left: 1%;
+	margin-bottom: 15px;
+	font-size: 20px;
+	background-color: #cccc99;	
+}
+div#menu_cat a:link {
+color: #333333; 
+background: #cccc99; 
+}
+
+div#menu_cat a:active { 
+color: #000000;
+background: #cccc99; 
+}
+
+div#menu_cat a:visited {
+color: #333333; 
+background: #cccc99; 
+}
+
+div#menu_cat a:hover {
+color: #eeeeee;
+background: #333333; 
+border:1px solid #000000; 
+}

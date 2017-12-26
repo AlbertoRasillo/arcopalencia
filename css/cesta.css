@@ -1,0 +1,7 @@
+#cesta{
+	position: absolute;
+	top: 5%;
+	right: 5%;
+	border-style: solid;
+	border-width: 3px;
+}

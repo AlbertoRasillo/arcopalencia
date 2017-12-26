@@ -1,0 +1,1 @@
+<h4> &copy <?php echo date('Y') ?> Plataforma Arco Desarrollado por Alberto Rasillo </h4>

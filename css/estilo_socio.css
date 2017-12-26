@@ -1,0 +1,197 @@
+/*css general*/
+body{
+	text-align: center;
+}
+#contenedor{
+	width:100%;
+	margin: 10px auto;
+	text-align: left;
+}
+article{
+	background: #FFFBB9;
+	border: 1px solid #999999;
+	padding: 20px;
+	margin-bottom: 15px;
+	font: 0.8em verdana, sans-serif;
+}
+#pie{
+	background: #E6E0F8;
+	text-align: center;
+	width: 100%;
+}
+#salir{
+	float: right;
+}
+a, img{
+	border:none;
+}
+a:link{
+	text-decoration: none;
+}
+th{
+	text-align: inherit;
+	background: #CCCCCC;
+	color: #000000;
+}
+/*Inicio css pagina principal socio*/
+#cabecera_pri{
+	background: #FFFBB9;
+	border: 1px solid #999999;
+	padding-left: 10px;
+	min-width: 450px;
+}
+#menu_pri li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+#menu_pri li:hover{
+	display: inline-block;
+	background: #FACC2E;
+	color: #D8D8D8;
+}
+#menu_pri{
+	font: bold 1em verdana, sans-serif;
+	width: 100%;
+}
+#seccion_pri{
+	float:left;
+	width:100%;
+	margin:10px auto;
+}
+/* Tablon anuncios*/
+#tablon tr:nth-child(n+2):nth-child(-n+6) {background: #FE2E2E}
+#tablon tr:nth-child(n+6) {background: #F5A9D0}
+#tablon{
+	width: 100%;
+}
+/*Fin css pagina principal socio*/
+/*Inicio css de el proceso de pedido*/
+/*Menu proceso de pedido*/
+#cabecera_pro_ped{
+	background: #FFFBB9;
+	border: 1px solid #999999;
+	padding-left: 50px;
+}
+#menu_pro_ped{
+	background: #CCCCCC;
+	padding: 5px 5px;
+}
+#menu_pro_ped li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+	font: bold 1em verdana, sans-serif;
+}
+/*Seccion proceso de pedido*/
+#seccion_pro_ped{
+	float:left;
+	width:100%;
+	margin:10px auto;
+}
+/*Tabla proceso de pedido*/
+#tabla_pro_ped tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_pro_ped{
+	width: 100%;
+}
+/*Fin de css proceso de pedido*/
+/*Inicio css seccion de productos*/
+/*Menu de categorias de productos*/
+#cabecera_pro{
+	background: #FFFBB9;
+	border: 1px solid #999999;
+	padding-left: 10px;
+}
+#menu_cat{
+	background: #CCCCCC;
+	padding: 5px 5px;
+}
+#menu_cat li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+#menu_prin li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+#menu_prin{
+	font: bold 1em verdana, sans-serif;
+}
+/*Tabla de productos*/
+#tabla_pro tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_pro{
+	width: 100%;
+}
+#tabla_pro tr:hover{
+	background-color: #1C1C1C;
+	color: #FFFFFF;
+}
+#seccion_pro{
+	float:left;
+	width:80%;
+	margin:0.5em ;
+	min-width: 520px;
+}
+/*Tabla de cesta en productos*/
+#menu_cesta{
+	float: left;
+	width: 18%;
+	margin: 0.5em 0 0 ;
+	background: #CCCCCC;
+	min-width: 9em;
+}
+#cabecera_cesta{
+	text-align: center;
+}
+#tabla_cesta{
+	width: 100%;
+	background: #CCCCCC;
+}
+#tabla_cesta td{
+	font-size: 0.85em;
+}
+#eliminar{
+	width: 0.6em;
+}
+#fuerahorarioped{
+	text-align: center;
+	color: #FF0000;
+}
+/*Fin css seccion de productos*/
+/*-Inicio css historial pedidos-*/
+#tabla_his_fec tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_his_fec{
+	width: 100%;
+	text-align: center;
+	background: #FFFBB9;
+}
+#lis_fec{
+	float:left;
+	width:15%;
+	margin:10px auto;
+	
+}
+#ver_ped{
+	float: left;
+	min-width: 84%;
+	margin: 10px 0px 0px 10px;
+	background: #FFFBB9;
+	
+}
+#tabla_his_ped tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_his_ped{
+	width: 100%;	
+}
+#pedido_realizado{
+	background: #E6E0F8;
+}
+#pedido_realizado h3{
+	text-align: center;
+	color: #FF0000;
+}
+#pedido_realizado h4{
+	text-align: center;
+	font-size: bold;
+}

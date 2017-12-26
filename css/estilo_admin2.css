@@ -1,0 +1,81 @@
+/*css general*/
+body{
+	text-align: center;
+}
+#contenedor{
+	width:100%;
+	margin: 10px auto;
+	text-align: left;
+}
+article{
+	background: #CEE3F6;
+	border: 1px solid #999999;
+	padding: 20px;
+	margin-bottom: 15px;
+	font: 0.8em verdana, sans-serif;
+}
+#pie{
+	background: #E6E0F8;
+	text-align: center;
+}
+#salir{
+	float: right;
+}
+a, img{
+	border:none;
+}
+a:link{
+	text-decoration: none;
+}
+th{
+	text-align: inherit;
+}
+/*Inicio css pagina principal admin*/
+#cabecera_pri{
+	background: #CEE3F6;
+	border: 1px solid #999999;
+	padding-left: 10px;
+}
+#menu_pri{
+	font: bold 1em verdana, sans-serif;
+}
+#menu_pri li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+#menu_pri li:hover{
+	display: inline-block;
+	background: #0080FF;
+	color: #D8D8D8;
+}
+#seccion_pri{
+	float:left;
+	width:100%;
+	margin:10px auto;
+}
+/* Tablon anuncios*/
+#tablon tr:nth-child(n+2):nth-child(-n+6) {background: #FE2E2E}
+#tablon tr:nth-child(n+6) {background: #F5A9D0}
+#tablon{
+	width: 100%;
+}
+/*Tabla*/
+#tabla tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla{
+	width: 100%;
+	text-align: left;
+}
+#tabla_ped_tot tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_ped_tot{
+	width: 450px;
+}
+#error_fecha{font-weight:bold;color:red;}
+#anadir{width: 15px;}
+
+/*Tabla de pedido*/
+#tabla_ped tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_ped{
+	width: 100%;
+}
+#error_fecha{font-weight:bold;color:red;}

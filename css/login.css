@@ -1,0 +1,24 @@
+body{
+	text-align: center;
+}
+#contenedor{
+	width:960px;
+	margin: 10px auto;
+	text-align: left;
+}
+section{
+	background: #CCCCCC;
+	border: 1px solid #999999;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+#cabecera{
+	background: #FFFBB9;
+	border: 1px solid #999999;
+	padding-left: 10px;
+}
+#pie{
+	background: #E6E0F8;
+	text-align: center;
+	width: 100%;
+}

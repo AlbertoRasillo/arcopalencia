@@ -1,0 +1,67 @@
+/*css general*/
+body{
+	text-align: center;
+}
+#contenedor{
+	width:100%;
+	margin: 10px auto;
+	text-align: left;
+}
+article{
+	background: #D8F6CE;
+	border: 1px solid #999999;
+	padding: 20px;
+	margin-bottom: 15px;
+}
+#pie{
+	background: #E6E0F8;
+	text-align: center;
+	width: 100%;
+}
+#salir{
+	float: right;
+}
+a, img{
+	border:none;
+}
+a:link{
+	text-decoration: none;
+}
+th{
+	text-align: inherit;
+}
+/*Inicio css pagina principal productor*/
+#cabecera_pri{
+	background: #D8F6CE;
+	border: 1px solid #999999;
+	padding-left: 10px;
+}
+#menu_pri li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+#menu_pri{
+	font: bold 16px verdana, sans-serif;
+}
+#seccion_pri{
+	float:left;
+	width:100%;
+	margin:10px auto;
+}
+/* Tablon anuncios*/
+#tablon tr:nth-child(n+2):nth-child(-n+6) {background: #FE2E2E}
+#tablon tr:nth-child(n+6) {background: #F5A9D0}
+#tablon{
+	width: 100%;
+}
+/*Tabla de pedido*/
+#tabla_ped tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_ped{
+	width: 100%;
+}
+#tabla_ped_tot tr:nth-child(2n+3) {background: #BDBDBD}
+#tabla_ped_tot{
+	width: 450px;
+}
+#error_fecha{font-weight:bold;color:red;}
