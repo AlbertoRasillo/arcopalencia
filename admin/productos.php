@@ -20,18 +20,6 @@
 		
 	<?php 
 		include("../conectar.php");	
-        
-        $offset = 0;
-        $page_result = 5; 
-    
-        if($_GET['pageno'])
-        {
-         $page_value = $_GET['pageno'];
-         if($page_value > 1)
-         {  
-          $offset = ($page_value - 1) * $page_result;
-         }
-        }
 	 
 	 	$fila=mysql_query("select po.categoria as categoria,po.medida as medida,po.descripcion as descripcion,
 	 	po.estado as estado,po.id_producto as id_producto,
@@ -42,8 +30,7 @@
 		    where a.id_productor=b.id_productor
 		    and a.id_producto=b.id_producto
 		    and pr.id_productor=b.id_productor
-		    and po.id_producto=b.id_producto) and fecha_fin is NULL group by a.id_producto,a.id_productor order by po.nombre,pr.nombre DESC
-            limit $offset, $page_result ");
+		    and po.id_producto=b.id_producto) and fecha_fin is NULL group by a.id_producto,a.id_productor order by po.nombre,pr.nombre DESC");
 
 	 ?>
 	 <table id="tabla">
@@ -108,22 +95,6 @@
 			 	echo"</tr>";
 		 	}
 	 	}
-
-        $pagecount = 10; // Total number of rows
-        $num = $pagecount / $page_result ;
-
-        if($_GET['pageno'] > 1)
-        {
-         echo "<a href = 'productos.php?pageno = ".($_GET['pageno'] - 1)." '> Prev </a>";
-        }
-        for($i = 1 ; $i <= $num ; $i++)
-        {
-         echo "<a href = 'productos.php?pageno = ". $i ." >". $i ." '</a>";
-        }
-        if($num! = 1)
-        {
-         echo "<a href = 'productos.php?pageno = ".($_GET['pageno'] + 1)." '> Next </a>";
-        }
 	 	
 	 	mysql_close();
 	 	 ?>
