@@ -1,5 +1,0 @@
-#Con estos comandos de terminal cambiamos las funciones de php para que sean soportadas en PHP7
-
-grep -rl 'mysql_fetch_array($fila)' arcopalencia/ | xargs sed -i 's/mysql_fetch_array($fila)/mysqli_fetch_array($fila,MYSQLI_ASSOC)/g'
-
-grep -rl 'mysql_query(' arcopalencia/ | xargs sed -i 's/mysql_query(/mysqli_query($con,/g'
