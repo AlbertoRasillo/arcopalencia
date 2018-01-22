@@ -1,0 +1,27 @@
+#Cambios de la base de datos en el campo estado para cambiar de varchar a int
+#TODO hay que cambiar el nombre de los ficheros de las imagenes para que se muestre
+
+UPDATE socio set estado='1' WHERE estado='activado';
+UPDATE socio set estado='0' WHERE estado='desactivado';
+
+ALTER TABLE socio CHANGE estado estado INT(11);
+
+UPDATE productor set estado='1' WHERE estado='activado';
+UPDATE productor set estado='0' WHERE estado='desactivado';
+
+ALTER TABLE productor CHANGE estado estado INT(11);
+
+UPDATE producto set estado='1' WHERE estado='activado';
+UPDATE producto set estado='0' WHERE estado='desactivado';
+
+ALTER TABLE producto CHANGE estado estado INT(11);
+
+#Cambio en el codigo fuente renombrando los campos
+
+grep -rl --exclude=migracionphp.sh 'activado' . | xargs sed -i 's/activado/1/g'
+
+grep -rl --exclude=migracionphp.sh 'des1' . | xargs sed -i 's/des1/0/g'
+
+grep -rl --exclude=migracionphp.sh 'activar' . | xargs sed -i 's/activar/1/g'
+
+grep -rl --exclude=migracionphp.sh 'des1' . | xargs sed -i 's/des1/0/g'
