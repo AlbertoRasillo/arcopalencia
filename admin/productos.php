@@ -19,9 +19,22 @@
 			<article>
 		
 	<?php 
-		include("../conectar.php");	
-	 
-	 	$fila=mysql_query("select po.categoria as categoria,po.medida as medida,po.descripcion as descripcion,
+		include("../conectar.php");
+		if (!isset($_GET['estado'])) {
+			$estado = "activado";
+			echo $estado;
+		}
+		elseif (isset($_GET['estado'])) {
+			echo "CACA";
+			foreach($_GET as $name=>$value)
+			{
+
+				$estado = strval($value);
+				echo $estado;
+				
+			}
+		}
+	 	$fila=mysqli_query($con,"select po.categoria as categoria,po.medida as medida,po.descripcion as descripcion,
 	 	po.estado as estado,po.id_producto as id_producto,
 	 	pr.nombre as pro_nom, po.nombre as nombre, a.precio as precio, a.fecha
 		from producto po, vende a, productor pr 
@@ -30,7 +43,7 @@
 		    where a.id_productor=b.id_productor
 		    and a.id_producto=b.id_producto
 		    and pr.id_productor=b.id_productor
-		    and po.id_producto=b.id_producto) and fecha_fin is NULL group by a.id_producto,a.id_productor order by po.nombre,pr.nombre DESC");
+		    and po.id_producto=b.id_producto) and fecha_fin is NULL and po.estado='".$estado."' group by a.id_producto,a.id_productor order by po.nombre,pr.nombre DESC");
 
 	 ?>
 	 <table id="tabla">
@@ -49,10 +62,17 @@
 	 		Nombre: <input type="text" name="criterio" />
 	 		<input type="submit" value="Buscar"/>
 	 	</form>
+		<form action="" method="GET">
+			<select name="estado">
+				<option value="activado">activado</option>
+				<option value="desactivado">desactivado</option>
+			</select>
+			<input type="submit" value="estado">
+		</form>
 	 	<a href="ficha_producto.php"><img id="anadir" src="../img/anadir.png" alt="add">Añadir Producto</a>
 	 	<?php 
 	 	if (!isset($_GET['criterio'])) {
-	 		while ($celda = mysql_fetch_array($fila)) {
+	 		while ($celda = mysqli_fetch_array($fila,MYSQLI_ASSOC)) {
 			 	echo"<tr>";	
 			 			echo"<td>".$celda['nombre']."</td>";
 			 			echo"<td>".$celda['pro_nom']."</td>";
@@ -69,7 +89,7 @@
 	 	}
 	 	}elseif (isset($_GET['criterio'])) {
 	 	$criterio=$_GET['criterio'];
-	 	$buscar=mysql_query("select po.categoria as categoria,po.medida as medida,po.descripcion as descripcion,
+	 	$buscar=mysqli_query($con,"select po.categoria as categoria,po.medida as medida,po.descripcion as descripcion,
 	 	po.estado as estado,po.id_producto as id_producto,
 	 	pr.nombre as pro_nom, po.nombre as nombre, a.precio as precio, a.fecha
 		from producto po, vende a, productor pr 
@@ -80,7 +100,7 @@
 		    and pr.id_productor=b.id_productor
 		    and po.id_producto=b.id_producto) and fecha_fin is NULL and po.nombre like 
 		'%$criterio%' group by a.id_producto,a.id_productor");
-		 		while ($celda = mysql_fetch_array($buscar)) {
+		 		while ($celda = mysqli_fetch_array($buscar,MYSQLI_ASSOC)) {
 			 	echo"<tr>";	
 			 			echo"<td>".$celda['nombre']."</td>";
 			 			echo"<td>".$celda['pro_nom']."</td>";
@@ -96,7 +116,7 @@
 		 	}
 	 	}
 	 	
-	 	mysql_close();
+	 	mysqli_close($con);
 	 	 ?>
 	 </table>
 			</article>
