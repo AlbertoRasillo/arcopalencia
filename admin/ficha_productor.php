@@ -23,13 +23,13 @@
 		if (isset($_GET['nombre'])or isset($_GET['apellidos'])) {
 			$query="insert into productor (nombre,apellidos,email,telefono,direccion,password) values
 			('$_GET[nombre]','$_GET[apellidos]','$_GET[email]','$_GET[telefono]','$_GET[direccion]','$_GET[pass]')";
-			mysql_query($query);
+			mysqli_query($con,$query);
 		if ($query) {
 			echo "productor guardado $query";;
 		}else{echo "error";}
 
 		}
-		mysql_close();
+		mysqli_close($con);
 	 ?>
 	 <h3 align="center">Ficha Productor</h3>
 	 <form action="" method="GET">

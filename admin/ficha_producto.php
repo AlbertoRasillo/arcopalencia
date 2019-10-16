@@ -23,10 +23,10 @@
 		if (isset($_GET['nombre'])or isset($_GET['precio'])) {
 			$query="insert into producto (nombre,categoria,medida,descripcion) values
 			('$_GET[nombre_producto]','$_GET[categoria]','$_GET[medida]','$_GET[descripcion]')";
-			mysql_query($query);
+			mysqli_query($con,$query);
 			$query2="insert into vende (id_producto,id_productor,precio,fecha) values (LAST_INSERT_ID(),'$_GET[id_productor]',
 			'$_GET[precio]',Now())";
-			mysql_query($query2);
+			mysqli_query($con,$query2);
 		if ($query) {
 			echo "Producto guardado $query";;
 		}else{echo "error";}
@@ -71,9 +71,9 @@
 		 		<td>
 		 			Productor:<select name="id_productor" id="id_productor">
 		 			<?php 
-		 				$idproductor=mysql_query("select nombre,apellidos,id_productor from productor order by nombre,apellidos DESC");
+		 				$idproductor=mysqli_query($con,"select nombre,apellidos,id_productor from productor order by nombre,apellidos DESC");
 		 				if($idproductor==true){
-						while ($celda = mysql_fetch_array($idproductor)) {
+						while ($celda = mysqli_fetch_array($idproductor,MYSQLI_ASSOC)) {
 		 				echo"<option value=$celda[id_productor]>".$celda['nombre']." ".$celda['apellidos']."</option>";
 		 			} }?>
 		 				

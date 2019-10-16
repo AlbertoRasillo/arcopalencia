@@ -22,17 +22,17 @@
 		include("../conectar.php");
 		if (isset($_GET['nombre']) or isset($_GET['apellidos'])) {
 			$query="update socio set nombre='$_GET[nombre]',apellidos='$_GET[apellidos]',email1='$_GET[email1]',telefono='$_GET[telefono]',password='$_GET[pass]' where id_socio='$_GET[id_socio]'";
-			mysql_query($query);
+			mysqli_query($con,$query);
 		if ($query==0) {
 			echo "usuario guardado $query";;
-		}else{echo "Error en registro socio " .mysql_error($con)."<br />";}
+		}else{echo "Error en registro socio " .mysqli_error($con)."<br />";}
 
 		}
 		if (isset($_GET['id_socio'])) {
-			$editarsocio=mysql_query("select nombre,apellidos,email1,telefono,password from socio where id_socio='$_GET[id_socio]'");
-			$editarsocio=mysql_fetch_assoc($editarsocio);
+			$editarsocio=mysqli_query($con,"select nombre,apellidos,email1,telefono,password from socio where id_socio='$_GET[id_socio]'");
+			$editarsocio = mysqli_fetch_array($editarsocio,MYSQLI_ASSOC);
 		}
-		mysql_close();
+		mysqli_close($con);
 	 ?>
 	 <?php if (isset($_GET['id_socio'])){ ?>
 	  <form action="" method="GET">

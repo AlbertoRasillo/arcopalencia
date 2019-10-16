@@ -22,13 +22,13 @@
 		if (isset($_GET['tema']) and isset($_GET['noticia'])) {
 			$query="insert into tablon (fecha,tema,noticia,admin_id_admin) values
 			(Now(),'$_GET[tema]','$_GET[noticia]','1')";
-			mysql_query($query);
+			mysqli_query($con,$query);
 		if ($query==0) {
 			echo "Noticia guardada $query";;
-		}else{echo "Error en registro noticia " .mysql_error($con)."<br />";}
+		}else{echo "Error en registro noticia " .mysqli_error($con)."<br />";}
 
 		}
-		mysql_close();
+		mysqli_close($con);
 	 ?>
 	 <h3 align="center">Ficha Noticia</h3>
 	 <form action="" method="GET">

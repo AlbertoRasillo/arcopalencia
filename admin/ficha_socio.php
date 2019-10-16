@@ -22,13 +22,13 @@
 		if (isset($_GET['nombre']) or isset($_GET['apellidos'])) {
 			$query="insert into socio (nombre,apellidos,email1,telefono,password) values
 			('$_GET[nombre]','$_GET[apellidos]','$_GET[email1]','$_GET[telefono]','$_GET[pass]')";
-			mysql_query($query);
+			mysqli_query($con,$query);
 		if ($query==0) {
 			echo "usuario guardado $query";;
-		}else{echo "Error en registro socio " .mysql_error($con)."<br />";}
+		}else{echo "Error en registro socio " .mysqli_error($con)."<br />";}
 
 		}
-		mysql_close();
+		mysqli_close($con);
 	 ?>
 	 <h3 align="center">Ficha Socio</h3>
 	 <form action="" method="GET">

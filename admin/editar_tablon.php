@@ -22,17 +22,17 @@
 		include("../conectar.php");
 		if (isset($_GET['tema']) or isset($_GET['noticia'])) {
 			$query="update tablon set tema='$_GET[tema]',noticia='$_GET[noticia]' where id_noticia='$_GET[id_noticia]'";
-			mysql_query($query);
+			mysqli_query($con,$query);
 		if ($query==0) {
 			echo "noticia guardada $query";;
-		}else{echo "Error en registro noticia " .mysql_error($con)."<br />";}
+		}else{echo "Error en registro noticia " .mysqli_error($con)."<br />";}
 
 		}
 		if (isset($_GET['id_noticia'])) {
-			$editarnoticia=mysql_query("select tema,noticia from tablon where id_noticia='$_GET[id_noticia]'");
-			$editarnoticia=mysql_fetch_assoc($editarnoticia);
+			$editarnoticia=mysqli_query($con,"select tema,noticia from tablon where id_noticia='$_GET[id_noticia]'");
+			$editarnoticia = mysqli_fetch_array($editarnoticia,MYSQLI_ASSOC);
 		}
-		mysql_close();
+		mysqli_close($con);
 	 ?>
 	 <?php if (isset($_GET['id_noticia'])){ ?>
 	 <h3 align="center">Editar Ficha Noticia</h3>

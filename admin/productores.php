@@ -20,7 +20,7 @@
 		
 	<?php 
 		include("../conectar.php");	
-		$fila=mysql_query("select * from productor order by nombre ASC");
+		$fila=mysqli_query($con,"select * from productor order by nombre ASC");
 	 ?>
 	 <table id="tabla">
 	 	<tr>
@@ -39,7 +39,7 @@
 	 	<a href="ficha_productor.php"><img id="anadir" src="../img/anadir.png" alt="add">Añadir Productor</a>
 	 	<?php 
 	 	if (!isset($_GET['criterio'])) {
-	 		while ($celda = mysql_fetch_array($fila)) {
+	 		while ($celda = mysqli_fetch_array($fila,MYSQLI_ASSOC)) {
 			 	echo"<tr>";	
 			 			echo"<td>".$celda['nombre']."</td>";
 			 			echo"<td>".$celda['apellidos']."</td>";
@@ -54,9 +54,9 @@
 	 	}
 	 	}elseif (isset($_GET['criterio'])) {
 	 	$criterio=$_GET['criterio'];
-	 	$buscar=mysql_query("select * from productor where nombre like 
+	 	$buscar=mysqli_query($con,"select * from productor where nombre like 
 		'%$criterio%' order by nombre");
-		 		while ($celda = mysql_fetch_array($buscar)) {
+		 		while ($celda = mysqli_fetch_array($buscar,MYSQLI_ASSOC)) {
 		 	echo"<tr>";
 		 			echo"<td>".$celda['nombre']."</td>";
 		 			echo"<td>".$celda['apellidos']."</td>";
@@ -68,7 +68,7 @@
 		 	}
 	 	}
 	 	
-	 	mysql_close();
+	 	mysqli_close($con);
 	 	 ?>
 	 </table>
 			</article>

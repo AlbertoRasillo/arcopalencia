@@ -27,7 +27,7 @@
 	<section id="seccion_pro">
 	<?php 
 		include("conectar.php");		
-		$fila=mysql_query("select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
+		$fila=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
 			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
 		 	from vende as a, productor pr, producto p
 			where fecha=(
@@ -39,7 +39,7 @@
 
 		if (isset($_GET['categoria'])) {
 			$cat=$_GET['categoria'];
-			$fila=mysql_query("select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
+			$fila=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
 			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
 		 	from vende as a, productor pr, producto p
 			where fecha=(
@@ -74,7 +74,7 @@
 	 	<?php 
 	 	echo "<form action='proceso_cesta.php' method='GET'>";
 	 	if (!isset($_GET['criterio'])) {
-	 		while ($celda = mysql_fetch_array($fila)) {
+	 		while ($celda = mysqli_fetch_array($fila,MYSQLI_ASSOC)) {
 			 	echo"<tr>";	
 			 			echo"<td>".$celda['pro_nom']."</td>";
 			 			echo"<td>".$celda['prod_nom']." ".$celda['prod_ape']."</td>";
@@ -101,7 +101,7 @@
 	 	}
 	 	}elseif (isset($_GET['criterio'])) {
 	 	$criterio=$_GET['criterio'];
-	 	$buscar=mysql_query("select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
+	 	$buscar=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
 			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
 		 	from vende as a, productor pr, producto p
 			where fecha=(
@@ -110,7 +110,7 @@
 		    and a.id_producto=b.id_producto
 		    and pr.id_productor=b.id_productor
 		    and p.id_producto=b.id_producto) and p.estado='activado' and fecha_fin is NULL and p.nombre like '%$criterio%' group by a.id_producto,a.id_productor");
-		 		while ($celda = mysql_fetch_array($buscar)) {
+				while ($celda = mysqli_fetch_array($buscar,MYSQLI_ASSOC)) {
 		 	echo"<tr>";	
 			 			echo"<td>".$celda['pro_nom']."</td>";
 			 			echo"<td>".$celda['prod_nom']."</td>";
@@ -139,7 +139,7 @@
 	 		echo "<tr><td><input type='submit' value='Añadir a la cesta'/></td></tr>";
 	 	}
 	 	echo"</form>";
-	 	mysql_close();
+	 	mysqli_close($con);
 	 	 ?>
 
 	 </table>

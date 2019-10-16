@@ -20,9 +20,9 @@
 	foreach ($pro_cesta as $key => $value) {
 	//eliminamos del key el string id para obtener el id_producto
 	$id_pro=str_replace("idpro", "", $key);
-	$pro_nom=mysql_query("select nombre,precio from producto inner join 
+	$pro_nom=mysqli_query($con,"select nombre,precio from producto inner join 
 		vende on producto.id_producto=vende.id_producto where producto.id_producto='$id_pro' and fecha_fin is null");
-	$res=mysql_fetch_assoc($pro_nom);
+	$res=mysqli_fetch_array($pro_nom,MYSQLI_ASSOC);
 	echo"<tr>";
 	echo "<td>$value</td>";
 	echo "<td>x</td>";

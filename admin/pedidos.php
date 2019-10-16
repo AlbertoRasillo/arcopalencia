@@ -54,9 +54,9 @@
 				Productor: <select name="id_productor" id="id_productor">
 						<option value="vacio" selected="selected">Todos</option>
 		 			<?php 
-		 				$idproductor=mysql_query("select distinct(id_productor),nombre,apellidos from productor");
+		 				$idproductor=mysqli_query($con,"select distinct(id_productor),nombre,apellidos from productor");
 		 				if($idproductor==true){
-						while ($celda = mysql_fetch_array($idproductor)) {
+						while ($celda = mysqli_fetch_array($idproductor,MYSQLI_ASSOC)) {
 		 				echo"<option value=$celda[id_productor]>".$celda['nombre']." ".$celda['apellidos']."</option>";
 		 			} }?>
 		 		</select>
@@ -70,11 +70,11 @@
 				$fecha_inicio=$_GET['fecha_inicio'];
 				$fecha_fin=$_GET['fecha_fin'];
 				if ($fecha_inicio<=$fecha_fin) {
-									$pedidos=mysql_query("select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
+									$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by c.id_cabecera_pedido,pr.id_producto");
-				$total=mysql_query("select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
+				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by pr.id_producto");
@@ -87,7 +87,7 @@
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
 				echo"</tr>";
-				while ($fila = mysql_fetch_assoc($pedidos)){
+				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila[nombre] $fila[apellidos]</td>";
 					echo"<td>$fila[producto]</td>";
@@ -105,7 +105,7 @@
 					echo"<th>Producto</th>";
 					echo"<th>Cantidad</th>";
 				echo"</tr>";
-				while ($fila1 = mysql_fetch_assoc($total)){
+				while ($fila1 = mysqli_fetch_array($total,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila1[prod_nom]</td>";
 					echo"<td>$fila1[sum_cant]</td>";
@@ -120,11 +120,11 @@
 				$fecha_fin=$_GET['fecha_fin'];
 				$id_productor=$_GET['id_productor'];
 				if ($fecha_inicio<=$fecha_fin) {
-									$pedidos=mysql_query("select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
+									$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY ");
-				$total=mysql_query("select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
+				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by pr.id_producto");
@@ -137,7 +137,7 @@
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
 				echo"</tr>";
-				while ($fila = mysql_fetch_assoc($pedidos)){
+				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila[nombre] $fila[apellidos]</td>";
 					echo"<td>$fila[producto]</td>";
@@ -155,7 +155,7 @@
 					echo"<th>Producto</th>";
 					echo"<th>Cantidad</th>";
 				echo"</tr>";
-				while ($fila1 = mysql_fetch_assoc($total)){
+				while ($fila1 = mysqli_fetch_array($total,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila1[prod_nom]</td>";
 					echo"<td>$fila1[sum_cant]</td>";
@@ -167,11 +167,11 @@
 				}
 				if (isset($_GET['num_pedido']) and is_numeric($_GET['num_pedido']) and $_GET['num_pedido']!=0) {
 					$num_pedido=$_GET['num_pedido'];
-					$pedidos=mysql_query("select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
+					$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.id_cabecera_pedido=$num_pedido group by pr.id_producto");
-				$total=mysql_query("select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
+				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.id_cabecera_pedido=$num_pedido group by pr.id_producto");
@@ -184,7 +184,7 @@
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
 				echo"</tr>";
-				while ($fila = mysql_fetch_assoc($pedidos)){
+				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila[nombre] $fila[apellidos]</td>";
 					echo"<td>$fila[producto]</td>";
@@ -202,7 +202,7 @@
 					echo"<th>Producto</th>";
 					echo"<th>Cantidad</th>";
 				echo"</tr>";
-				while ($fila1 = mysql_fetch_assoc($total)){
+				while ($fila1 = mysqli_fetch_array($total,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila1[prod_nom]</td>";
 					echo"<td>$fila1[sum_cant]</td>";

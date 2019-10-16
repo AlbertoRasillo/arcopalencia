@@ -1,16 +1,16 @@
 <?php 
 
 	include("conectar.php");
-	$categoria=mysql_query("select distinct(categoria) from producto");
+	$categoria=mysqli_query($con,"select distinct(categoria) from producto");
 	echo "<ul>";
 	echo "<li>CATEGORIAS</li>";
 	echo "<li><a href='buscar_producto.php'>Todos los Productos</a></li>";
-	while ($menu = mysql_fetch_array($categoria)) {
+	while ($menu = mysqli_fetch_array($categoria,MYSQLI_ASSOC)) {
 		echo "<li><a href='buscar_producto.php?categoria=$menu[categoria]'>$menu[categoria]</a></li>";
 	}
 	echo " </ul>";
 
-	mysql_close();
+	mysqli_close($con);
  ?>
  
 

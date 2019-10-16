@@ -21,7 +21,7 @@
 		include("../conectar.php");
 		if (isset($_GET['id_producto'])) {
 			
-			$editarproducto=mysql_query("select a.id_vende as id_vende,p.categoria as categoria,p.medida as medida,p.descripcion as descripcion,
+			$editarproducto=mysqli_query($con,"select a.id_vende as id_vende,p.categoria as categoria,p.medida as medida,p.descripcion as descripcion,
 					p.estado as estado,p.id_producto as id_producto,pr.id_productor as id_productor,pr.nombre,p.nombre as nombre,a.precio, a.fecha
     				from vende as a, productor pr, producto p
     				where fecha=(
@@ -29,49 +29,49 @@
 					    where a.id_productor=b.id_productor
 					    and a.id_producto=b.id_producto
 					    and pr.id_productor=b.id_productor
-					    and p.id_producto=b.id_producto) and p.id_producto='$_GET[id_producto]' and fecha_fin is null group by a.id_producto,a.id_productor");
-			$editarproducto=mysql_fetch_assoc($editarproducto);
+						and p.id_producto=b.id_producto) and p.id_producto='$_GET[id_producto]' and fecha_fin is null group by a.id_producto,a.id_productor");
+			$editarproducto = mysqli_fetch_array($editarproducto,MYSQLI_ASSOC);
 			print_r($editarproducto);
 		}
 		if (isset($_GET['nombre']) or isset($_GET['precio'])) {
 			
 			if ($editarproducto['precio']!=$_GET['precio'] AND $editarproducto['id_productor']!=$_GET['id_productor']) {
 				echo "precio y productor";
-				$fin_producto=mysql_query("update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
+				$fin_producto=mysqli_query($con,"update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
 				$actualizar_producto="insert into vende (id_producto,id_productor,precio,fecha) values ($editarproducto[id_producto],
 					$_GET[id_productor],$_GET[precio],Now())"; 
-				mysql_query($actualizar_producto);
+				mysqli_query($con,$actualizar_producto);
 				$actualiza_ficha="update producto set
 				nombre='$_GET[nombre_producto]',categoria='$_GET[categoria]',medida='$_GET[medida]',descripcion='$_GET[descripcion]'
 				where id_producto='$_GET[id_producto]'";
-				mysql_query($actualiza_ficha);
+				mysqli_query($con,$actualiza_ficha);
 			}
 			elseif ($editarproducto['id_productor']!=$_GET['id_productor']) {
 				echo "productor";
-				$fin_producto1=mysql_query("update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
+				$fin_producto1=mysqli_query($con,"update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
 				$actualizar_producto1="insert into vende (id_producto,id_productor,precio,fecha) values ($editarproducto[id_producto],
 					'$_GET[id_productor]',$editarproducto[precio],Now())";
-				mysql_query($actualizar_producto1);
+				mysqli_query($con,$actualizar_producto1);
 				$actualiza_ficha1="update producto set
 				nombre='$_GET[nombre_producto]',categoria='$_GET[categoria]',medida='$_GET[medida]',descripcion='$_GET[descripcion]'
 				where id_producto='$_GET[id_producto]'";
-				mysql_query($actualiza_ficha1);
+				mysqli_query($con,$actualiza_ficha1);
 			}
 			elseif ($editarproducto['precio']!=$_GET['precio']) {
 				echo"precio";
-				$fin_producto2=mysql_query("update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
+				$fin_producto2=mysqli_query($con,"update vende set fecha_fin=Now() where id_vende='$editarproducto[id_vende]'");
 				$actualizar_producto2="insert into vende (id_producto,id_productor,precio,fecha) values ('$_GET[id_producto]','$_GET[id_productor]',
 				'$_GET[precio]',Now())";
-				mysql_query($actualizar_producto2);
+				mysqli_query($con,$actualizar_producto2);
 				$actualiza_ficha2="update producto set
 				nombre='$_GET[nombre_producto]',categoria='$_GET[categoria]',medida='$_GET[medida]',descripcion='$_GET[descripcion]'
 				where id_producto='$_GET[id_producto]'";
-				mysql_query($actualiza_ficha2);
+				mysqli_query($con,$actualiza_ficha2);
 			}else{
 				$actualiza_ficha3="update producto set
 				nombre='$_GET[nombre_producto]',categoria='$_GET[categoria]',medida='$_GET[medida]',descripcion='$_GET[descripcion]'
 				where id_producto='$_GET[id_producto]'";
-				mysql_query($actualiza_ficha3);
+				mysqli_query($con,$actualiza_ficha3);
 			}
 		
 		}
@@ -114,9 +114,10 @@
 		 		<td>
 		 			<select name="id_productor" id="id_productor">
 		 			<?php 
-		 				$idproductor=mysql_query("select distinct(id_productor) as id_productor,nombre,apellidos from productor");
+		 				$idproductor=mysqli_query($con,"select distinct(id_productor) as id_productor,nombre,apellidos from productor");
 		 				if($idproductor==true){
-						while ($celda = mysql_fetch_array($idproductor)) {
+							
+						while ($celda = mysqli_fetch_array($idproductor,MYSQLI_ASSOC)) {
 		 				if ($editarproducto['id_productor']==$celda['id_productor']) {
 		 					echo"<option selected='selected' value=$celda[id_productor]>".$celda['nombre']." ".$celda['apellidos']."</option>";
 		 				}else{
@@ -132,7 +133,7 @@
 			<tr><td><input type="submit" value="Enviar" /></td></tr>
 		 </table>
 	 </form>
-	 <?php } 	mysql_close(); ?>
+	 <?php } 	mysqli_close($con); ?>
 
 			</article>
 		</section>

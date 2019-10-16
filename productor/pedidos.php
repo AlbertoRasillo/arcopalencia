@@ -60,11 +60,11 @@
 				$fecha_fin=$_GET['fecha_fin'];
 				$id_productor=$_SESSION['id_productor'];
 				if ($fecha_inicio<=$fecha_fin) {
-									$pedidos=mysql_query("select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
+									$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY order by c.id_cabecera_pedido DESC");
-				$total=mysql_query("select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom 
+				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom 
 				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
 				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
 				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by pr.id_producto");
@@ -77,7 +77,7 @@
 					echo"<td>Fecha</td>";
 					echo"<td>Nº Pedido</td>";
 				echo"</tr>";
-				while ($fila = mysql_fetch_assoc($pedidos)){
+				while ($fila = mysqli_fetch_assoc($pedidos)){
 				echo"<tr>";
 					echo"<td>$fila[nombre] $fila[apellidos]</td>";
 					echo"<td>$fila[producto]</td>";
@@ -95,7 +95,7 @@
 					echo"<td>Producto</td>";
 					echo"<td>Cantidad</td>";
 				echo"</tr>";
-				while ($fila1 = mysql_fetch_assoc($total)){
+				while ($fila1 = mysqli_fetch_assoc($total)){
 				echo"<tr>";
 					echo"<td>$fila1[prod_nom]</td>";
 					echo"<td>$fila1[sum_cant]</td>";

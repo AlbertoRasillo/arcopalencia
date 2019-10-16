@@ -15,9 +15,9 @@
 		}
 	}
 	/*-Insertamos los datos de la cabecera de pedido-*/
-		$cabecer_pedido=mysql_query("insert into cabecera_pedido (id_socio,fecha) values ($id_socio,Now())");
-		$id_cabecera=mysql_query("select LAST_INSERT_ID() from cabecera_pedido");
-		$id_cabecera=mysql_fetch_assoc($id_cabecera);
+		$cabecer_pedido=mysqli_query($con,"insert into cabecera_pedido (id_socio,fecha) values ($id_socio,Now())");
+		$id_cabecera=mysqli_query($con,"select LAST_INSERT_ID() from cabecera_pedido");
+		$id_cabecera=mysqli_fetch_array($id_cabecera,MYSQLI_ASSOC);
 		$id_cabecera=$id_cabecera['LAST_INSERT_ID()'];
 	/*-Eliminamos en la key del array $pro_cesta el string idpro y despues ejecutamos el insert 
 	por cada producto de la cesta, finalmente mostramos si hay error en el insert y
@@ -26,19 +26,19 @@
 		$id_pro=str_replace("idpro", "", $key);
 	/*-Consultamos el precio de los productos para almacenarlo en la tabla de pedidos ya que los precios
 	pueden variar en el tiempo y tiene que reflejarse el precio con el que se realizó la compra-*/
-		$precio_producto=mysql_query("select id_vende from vende 
+		$precio_producto=mysqli_query($con,"select id_vende from vende 
 			where id_producto='$id_pro' and fecha_fin is null");
-		$precio_prod=mysql_fetch_assoc($precio_producto);
+		$precio_prod=mysqli_fetch_array($precio_producto,MYSQLI_ASSOC);
 			$id_vende=$precio_prod['id_vende'];
-			$insert_pedido=mysql_query("insert into pedido (cantidad,id_cabecera_pedido,id_vende)
+			$insert_pedido=mysqli_query($con,"insert into pedido (cantidad,id_cabecera_pedido,id_vende)
 	values ($cantidad,$id_cabecera,$id_vende)");	
 		if ($insert_pedido==0) {
-			echo "Error en la compra " .mysql_error($con)."<br />";
+			echo "Error en la compra " .mysqli_error($con)."<br />";
 			//print_r($precio_producto);
 		}//else{header("location: index.php");}
 		unset($_SESSION[$key]);
 		if ($insert_pedido==0) {
-			echo "Error en la compra " .mysql_error($con)."<br />";
+			echo "Error en la compra " .mysqli_error($con)."<br />";
 			print_r($precio_producto);
 		}else{
 			header("location: historial_pedidos.php?id_pedido_realizado=$id_cabecera");

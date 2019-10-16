@@ -29,17 +29,17 @@
 			$inicio=($pagina-1)*$tamano_pagina;
 		}
 		//se puede cambiar el fomato de la fecha con date_format(fecha,'%d-%m-%Y') as fecha
-		$fechas=mysql_query("select date_format(fecha,'%d-%m-%Y %T') as fecha1,fecha,id_cabecera_pedido from cabecera_pedido where id_socio=$_SESSION[id_usuario]
+		$fechas=mysqli_query($con,"select date_format(fecha,'%d-%m-%Y %T') as fecha1,fecha,id_cabecera_pedido from cabecera_pedido where id_socio=$_SESSION[id_usuario]
 			group by fecha order by fecha DESC limit $inicio,$tamano_pagina");
-		$registros=mysql_query("select count(id_cabecera_pedido) as registros from cabecera_pedido where id_socio=$_SESSION[id_usuario]");
-		$registros=mysql_fetch_assoc($registros);
+		$registros=mysqli_query($con,"select count(id_cabecera_pedido) as registros from cabecera_pedido where id_socio=$_SESSION[id_usuario]");
+		$registros=mysqli_fetch_array($registros,MYSQLI_ASSOC);
 	 ?>
 		<section id="lis_fec">
 			<article>
 				<table id="tabla_his_fec" border="1">
 					<tr><th>Fechas de pedidos</th></tr>
 				<?php 
-				while ( $fila = mysql_fetch_assoc($fechas)) {
+				while ( $fila = mysqli_fetch_array($fechas,MYSQLI_ASSOC)) {
 					echo"<tr>";
 						echo"<td><a href='?id_fecha=$fila[fecha]&pagina=$pagina'>".$fila['fecha1']."</a></td>";
 					echo"</tr>";
@@ -78,7 +78,7 @@
 			<?php
 			if (isset($_GET['id_fecha'])) {
 				$id_fecha=$_GET['id_fecha'];
-				$fecha_pedido=mysql_query("select producto.nombre as pro_nom, p.cantidad as pro_can, v.precio as pro_pre, productor.nombre as prod_nom, productor.apellidos as prod_ape from cabecera_pedido c, socio s, pedido p, vende v,
+				$fecha_pedido=mysqli_query($con,"select producto.nombre as pro_nom, p.cantidad as pro_can, v.precio as pro_pre, productor.nombre as prod_nom, productor.apellidos as prod_ape from cabecera_pedido c, socio s, pedido p, vende v,
 				producto, productor where c.id_socio=s.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and p.id_vende=v.id_vende and v.id_producto=producto.id_producto
 				and v.id_productor=productor.id_productor and c.fecha='$id_fecha' and s.id_socio=$_SESSION[id_usuario]");
 				$total_pro=0;
@@ -89,7 +89,7 @@
 						echo "<th>Precio</th>";
 						echo "<th>Productor</th>";
 					echo "</tr>";
-					while ($fila=mysql_fetch_assoc($fecha_pedido)) {
+					while ($fila=mysqli_fetch_array($fecha_pedido,MYSQLI_ASSOC)) {
 					echo"<tr>";
 						echo"<td>$fila[pro_nom]</td>";
 						echo"<td>$fila[pro_can]</td>";
@@ -108,10 +108,10 @@
 					echo"</tr>";
 				echo"</table>";
 				//consulta para obtener el nombre socio y la fecha de pedido para crear PDF
-				$fecha_socio=mysql_query("select nombre, apellidos, DATE_FORMAT(fecha,'%d-%m-%Y %T') as fecha, id_cabecera_pedido from socio inner join cabecera_pedido on socio.id_socio=cabecera_pedido.id_socio
+				$fecha_socio=mysqli_query($con,"select nombre, apellidos, DATE_FORMAT(fecha,'%d-%m-%Y %T') as fecha, id_cabecera_pedido from socio inner join cabecera_pedido on socio.id_socio=cabecera_pedido.id_socio
 											where socio.id_socio=$_SESSION[id_usuario] and cabecera_pedido.fecha='$id_fecha' group by fecha");
 				//almacenamos los datos en el array $fecha_socio_ped
-				while ($fila=mysql_fetch_assoc($fecha_socio)) {
+				while ($fila=mysqli_fetch_array($fecha_socio,MYSQLI_ASSOC)) {
 					$fecha_socio_ped=$fila;
 				}
 				//Utilizamos serialize para convertir el array en binario para que se pueda enviar por 
@@ -121,7 +121,7 @@
 				$total_pro=serialize($total_pro);
 				echo"<a href='fpdf/tabla_pedido.php?pedido=$pedido&&fecha_socio_ped=$fecha_socio_ped&&total_pro=$total_pro' target='_blank'>Guardar en <img src='img/logo-pdf.gif' alt='pdf' /></a>";
 			}
-			mysql_close();
+			mysqli_close($con);
 			 ?>
 		</section>
 			 <div id="push"></div>

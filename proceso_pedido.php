@@ -40,10 +40,10 @@
 					foreach ($pro_cesta as $key => $value) {
 					$id_pro=str_replace("idpro", "", $key);
 					
-					$cesta=mysql_query("select producto.descripcion as pro_des,producto.nombre as pro_nom,precio,productor.nombre as prod_nom,productor.apellidos as prod_ape from 
+					$cesta=mysqli_query($con,"select producto.descripcion as pro_des,producto.nombre as pro_nom,precio,productor.nombre as prod_nom,productor.apellidos as prod_ape from 
 						producto inner join vende on producto.id_producto=vende.id_producto inner join productor
 						on vende.id_productor=productor.id_productor where producto.id_producto='$id_pro' and fecha_fin is null");
-					$cesta=mysql_fetch_assoc($cesta);
+					$cesta=mysqli_fetch_array($cesta,MYSQLI_ASSOC);
 					echo"<tr>";
 						echo"<td>$cesta[pro_nom]</td>";
 						echo"<td>$value</td>";
@@ -54,7 +54,7 @@
 					$precio_total=$cesta['precio']*$value+$precio_total;
 					}
 				}
-				mysql_close();
+				mysqli_close($con);
 				 ?>
 					<tr>
 						<td colspan="2"><input type="button" onClick="document.location = 'confirmar_pedido.php'" value="Confirmar pedido"></td>

@@ -1,9 +1,9 @@
 <?php 
 	if (isset($_POST['pass']) and isset($_POST['nombre'])) {
 	$nombre=$_POST['nombre'];
-	$nombre=mysql_real_escape_string($nombre);
+	#$nombre=mysqli_real_escape_string($con,$nombre);
 	$pass=$_POST['pass'];
-	$pass=mysql_real_escape_string($pass);
+	#$pass=mysqli_real_escape_string($con,$pass);
 	$rol=$_POST['rol'];
 	require_once('recaptcha-php/recaptchalib.php');
     $privatekey = "6Lcdx-ISAAAAALuYeJcIs2E9BaNH-s_nZNNt7MBv";
@@ -14,8 +14,8 @@
                                 $_POST["recaptcha_challenge_field"],
                                 $_POST["recaptcha_response_field"]);
 		if ($rol=="socio") {
-		$comprobar=mysql_query("select id_socio from socio where email1='$nombre' and password='$pass' and estado='activado'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_socio from socio where email1='$nombre' and password='$pass' and estado='activado'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 		if ($resul==true and $resp->is_valid) {
 			foreach ($resul as $id_usuario => $v_id_usuario) {
 				session_start();
@@ -30,8 +30,8 @@
 		}
 	}
 	if($rol=="productor"){
-		$comprobar=mysql_query("select id_productor from productor where email='$nombre' and password='$pass' and estado='activado'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_productor from productor where email='$nombre' and password='$pass' and estado='activado'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 		if ($resul==true and $resp->is_valid) {
 			foreach ($resul as $id_productor => $v_id_productor) {
 				session_start();
@@ -46,8 +46,8 @@
 		}
 	}
 	if($rol=="administrador"){
-		$comprobar=mysql_query("select id_admin from admin where email='$nombre' and password='$pass'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_admin from admin where email='$nombre' and password='$pass'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 		if ($resul==true and $resp->is_valid) {
 			foreach ($resul as $id_admin => $v_id_admin) {
 				session_start();
@@ -64,8 +64,8 @@
 
 	}else{
 		if ($rol=="socio") {
-		$comprobar=mysql_query("select id_socio from socio where email1='$nombre' and password='$pass' and estado='activado'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_socio from socio where email1='$nombre' and password='$pass' and estado='activado'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 		if ($resul==true ) {
 			foreach ($resul as $id_usuario => $v_id_usuario) {
 				session_start();
@@ -80,8 +80,8 @@
 		}
 	}
 	if($rol=="productor"){
-		$comprobar=mysql_query("select id_productor from productor where email='$nombre' and password='$pass' and estado='activado'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_productor from productor where email='$nombre' and password='$pass' and estado='activado'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 		if ($resul==true) {
 			foreach ($resul as $id_productor => $v_id_productor) {
 				session_start();
@@ -96,8 +96,8 @@
 		}
 	}
 	if($rol=="administrador"){
-		$comprobar=mysql_query("select id_admin from admin where email='$nombre' and password='$pass'");
-		$resul=mysql_fetch_assoc($comprobar);
+		$comprobar=mysqli_query($con,"select id_admin from admin where email='$nombre' and password='$pass'");
+		$resul=mysqli_fetch_array($comprobar,MYSQLI_ASSOC);
 			if ($resul==true) {
 				foreach ($resul as $id_admin => $v_id_admin) {
 					session_start();
