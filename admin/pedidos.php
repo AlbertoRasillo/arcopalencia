@@ -43,6 +43,7 @@
 		<nav id="menu_pri">
 		<?php 
 		include("menu_admin.php");
+                include("download_xls.php");
 		 ?>
 		</nav>
 	</header>
@@ -63,6 +64,14 @@
 		 		Nº pedido:<input type="text" name="num_pedido" id="num_pedido" value="0">
 				<input type="submit" value="Buscar">
 			</form>
+                              <?php
+                              if(array_key_exists('download', $_POST)) { 
+                                downloadXls(); 
+			      } 
+                              ?>
+                              <form method="post"> 
+                              <input type="submit" name="download" class="button" value="DescargaXML" />
+                              </form> 
 			</article>
 			<article>
 			<?php 
