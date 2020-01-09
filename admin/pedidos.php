@@ -95,7 +95,10 @@
 					echo"<th>Precio</th>";
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
+					echo"<th>Precio total de pedido</th>";
 				echo"</tr>";
+                                $total_pedido = 0;
+                                $pedido = NULL;
 				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
 					echo"<td>$fila[nombre] $fila[apellidos]</td>";
@@ -104,6 +107,19 @@
 					echo"<td>$fila[precio]</td>";
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
+					if (is_null($pedido)==true){
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+					}elseif ($pedido==$fila[id_cabecera_pedido]){
+                                           $total_pedido += $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                           $total_pedido = 0;
+					   $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           echo"<td>$total_pedido</td>";
+                                        }
 				echo"</tr>";
 					}
 				echo"</table>";
@@ -145,6 +161,7 @@
 					echo"<th>Precio</th>";
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
+					echo"<th>Precio total de pedido</th>";
 				echo"</tr>";
 				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
@@ -154,6 +171,19 @@
 					echo"<td>$fila[precio]</td>";
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
+					if (is_null($pedido)==true){
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+					}elseif ($pedido==$fila[id_cabecera_pedido]){
+                                           $total_pedido += $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                           $total_pedido = 0;
+					   $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           echo"<td>$total_pedido</td>";
+                                        }
 				echo"</tr>";
 					}
 				echo"</table>";
@@ -192,6 +222,7 @@
 					echo"<th>Precio</th>";
 					echo"<th>Fecha</th>";
 					echo"<th>Nº Pedido</th>";
+					echo"<th>Precio total de pedido</th>";
 				echo"</tr>";
 				while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
 				echo"<tr>";
@@ -201,6 +232,19 @@
 					echo"<td>$fila[precio]</td>";
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
+					if (is_null($pedido)==true){
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+					}elseif ($pedido==$fila[id_cabecera_pedido]){
+                                           $total_pedido += $fila[precio]*$fila[cantidad];
+                                           echo"<td>$total_pedido</td>";
+                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                           $total_pedido = 0;
+					   $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila[id_cabecera_pedido];
+                                           echo"<td>$total_pedido</td>";
+                                        }
 				echo"</tr>";
 					}
 				echo"</table>";
