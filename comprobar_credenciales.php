@@ -1,13 +1,13 @@
 <?php 
 	if (isset($_POST['pass']) and isset($_POST['nombre'])) {
+	include("conectar.php");
 	$nombre=$_POST['nombre'];
-	#$nombre=mysqli_real_escape_string($con,$nombre);
+	$nombre=mysqli_real_escape_string($con,$nombre);
 	$pass=$_POST['pass'];
-	#$pass=mysqli_real_escape_string($con,$pass);
+	$pass=mysqli_real_escape_string($con,$pass);
 	$rol=$_POST['rol'];
 	require_once('recaptcha-php/recaptchalib.php');
     $privatekey = "6Lcdx-ISAAAAALuYeJcIs2E9BaNH-s_nZNNt7MBv";
-	include("conectar.php");
 	if (isset($_POST["recaptcha_challenge_field"]) and isset($_POST["recaptcha_response_field"])) {
 		$resp = recaptcha_check_answer ($privatekey,
                                 $_SERVER["REMOTE_ADDR"],
