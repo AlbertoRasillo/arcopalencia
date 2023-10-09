@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Saltos de línea y colores</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Saltos de lÃ­nea y colores</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
-<h1>Saltos de línea y colores</h1>
-Continuemos con un ejemplo que imprime párrafos justificados. También ilustra el
+<h1>Saltos de lÃ­nea y colores</h1>
+Continuemos con un ejemplo que imprime pÃ¡rrafos justificados. TambiÃ©n ilustra el
 uso de colores.
 <div class="source">
 <pre><code>&lt;?php
@@ -21,7 +21,7 @@ function </span>Header<span class="kw">()
 
     </span><span class="cmt">// Arial bold 15
     </span>$<span class="kw">this-&gt;</span>SetFont<span class="kw">(</span><span class="str">'Arial'</span><span class="kw">,</span><span class="str">'B'</span><span class="kw">,</span>15<span class="kw">);
-    </span><span class="cmt">// Calculamos ancho y posición del título.
+    </span><span class="cmt">// Calculamos ancho y posiciÃ³n del tÃ­tulo.
     </span>$w <span class="kw">= </span>$<span class="kw">this-&gt;</span>GetStringWidth<span class="kw">(</span>$title<span class="kw">)+</span>6<span class="kw">;
     </span>$<span class="kw">this-&gt;</span>SetX<span class="kw">((</span>210<span class="kw">-</span>$w<span class="kw">)/</span>2<span class="kw">);
     </span><span class="cmt">// Colores de los bordes, fondo y texto
@@ -30,22 +30,22 @@ function </span>Header<span class="kw">()
     </span>$<span class="kw">this-&gt;</span>SetTextColor<span class="kw">(</span>220<span class="kw">,</span>50<span class="kw">,</span>50<span class="kw">);
     </span><span class="cmt">// Ancho del borde (1 mm)
     </span>$<span class="kw">this-&gt;</span>SetLineWidth<span class="kw">(</span>1<span class="kw">);
-    </span><span class="cmt">// Título
+    </span><span class="cmt">// TÃ­tulo
     </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>$w<span class="kw">,</span>9<span class="kw">,</span>$title<span class="kw">,</span>1<span class="kw">,</span>1<span class="kw">,</span><span class="str">'C'</span><span class="kw">,</span>true<span class="kw">);
-    </span><span class="cmt">// Salto de línea
+    </span><span class="cmt">// Salto de lÃ­nea
     </span>$<span class="kw">this-&gt;</span>Ln<span class="kw">(</span>10<span class="kw">);
 }
 
 function </span>Footer<span class="kw">()
 {
-    </span><span class="cmt">// Posición a 1,5 cm del final
+    </span><span class="cmt">// PosiciÃ³n a 1,5 cm del final
     </span>$<span class="kw">this-&gt;</span>SetY<span class="kw">(-</span>15<span class="kw">);
-    </span><span class="cmt">// Arial itálica 8
+    </span><span class="cmt">// Arial itÃ¡lica 8
     </span>$<span class="kw">this-&gt;</span>SetFont<span class="kw">(</span><span class="str">'Arial'</span><span class="kw">,</span><span class="str">'I'</span><span class="kw">,</span>8<span class="kw">);
     </span><span class="cmt">// Color del texto en gris
     </span>$<span class="kw">this-&gt;</span>SetTextColor<span class="kw">(</span>128<span class="kw">);
-    </span><span class="cmt">// Número de página
-    </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>0<span class="kw">,</span>10<span class="kw">,</span><span class="str">'Página '</span><span class="kw">.</span>$<span class="kw">this-&gt;</span>PageNo<span class="kw">(),</span>0<span class="kw">,</span>0<span class="kw">,</span><span class="str">'C'</span><span class="kw">);
+    </span><span class="cmt">// NÃºmero de pÃ¡gina
+    </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>0<span class="kw">,</span>10<span class="kw">,</span><span class="str">'PÃ¡gina '</span><span class="kw">.</span>$<span class="kw">this-&gt;</span>PageNo<span class="kw">(),</span>0<span class="kw">,</span>0<span class="kw">,</span><span class="str">'C'</span><span class="kw">);
 }
 
 function </span>ChapterTitle<span class="kw">(</span>$num<span class="kw">, </span>$label<span class="kw">)
@@ -54,9 +54,9 @@ function </span>ChapterTitle<span class="kw">(</span>$num<span class="kw">, </sp
     </span>$<span class="kw">this-&gt;</span>SetFont<span class="kw">(</span><span class="str">'Arial'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span>12<span class="kw">);
     </span><span class="cmt">// Color de fondo
     </span>$<span class="kw">this-&gt;</span>SetFillColor<span class="kw">(</span>200<span class="kw">,</span>220<span class="kw">,</span>255<span class="kw">);
-    </span><span class="cmt">// Título
-    </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>0<span class="kw">,</span>6<span class="kw">,</span><span class="str">"Capítulo </span>$num<span class="str"> : </span>$label<span class="str">"</span><span class="kw">,</span>0<span class="kw">,</span>1<span class="kw">,</span><span class="str">'L'</span><span class="kw">,</span>true<span class="kw">);
-    </span><span class="cmt">// Salto de línea
+    </span><span class="cmt">// TÃ­tulo
+    </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>0<span class="kw">,</span>6<span class="kw">,</span><span class="str">"CapÃ­tulo </span>$num<span class="str"> : </span>$label<span class="str">"</span><span class="kw">,</span>0<span class="kw">,</span>1<span class="kw">,</span><span class="str">'L'</span><span class="kw">,</span>true<span class="kw">);
+    </span><span class="cmt">// Salto de lÃ­nea
     </span>$<span class="kw">this-&gt;</span>Ln<span class="kw">(</span>4<span class="kw">);
 }
 
@@ -68,9 +68,9 @@ function </span>ChapterBody<span class="kw">(</span>$file<span class="kw">)
     </span>$<span class="kw">this-&gt;</span>SetFont<span class="kw">(</span><span class="str">'Times'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span>12<span class="kw">);
     </span><span class="cmt">// Imprimimos el texto justificado
     </span>$<span class="kw">this-&gt;</span>MultiCell<span class="kw">(</span>0<span class="kw">,</span>5<span class="kw">,</span>$txt<span class="kw">);
-    </span><span class="cmt">// Salto de línea
+    </span><span class="cmt">// Salto de lÃ­nea
     </span>$<span class="kw">this-&gt;</span>Ln<span class="kw">();
-    </span><span class="cmt">// Cita en itálica
+    </span><span class="cmt">// Cita en itÃ¡lica
     </span>$<span class="kw">this-&gt;</span>SetFont<span class="kw">(</span><span class="str">''</span><span class="kw">,</span><span class="str">'I'</span><span class="kw">);
     </span>$<span class="kw">this-&gt;</span>Cell<span class="kw">(</span>0<span class="kw">,</span>5<span class="kw">,</span><span class="str">'(fin del extracto)'</span><span class="kw">);
 }
@@ -92,25 +92,25 @@ function </span>PrintChapter<span class="kw">(</span>$num<span class="kw">, </sp
 </span>$pdf<span class="kw">-&gt;</span>Output<span class="kw">();
 </span>?&gt;</code></pre>
 </div>
-<p class='demo'><a href='tuto3.php' target='_blank' class='demo'>[Demo]</a></p>
-El método <a href='../doc/getstringwidth.htm'>GetStringWidth()</a> le permite determinar la longitud de una cadena
-en el tipo de letra actual, y se usa aquí para calcular la posición y ancho del
-borde que rodea al título. Después se establecen los colores
+<p class='demo'><a href='tuto3.php' target='_blank' class='demo'>[Ejecutar]</a></p>
+El mÃ©todo <a href='../doc/getstringwidth.htm'>GetStringWidth()</a> le permite determinar la longitud de una cadena
+en el tipo de letra actual, y se usa aquÃ­ para calcular la posiciÃ³n y ancho del
+borde que rodea al tÃ­tulo. DespuÃ©s se establecen los colores
 (mediante <a href='../doc/setdrawcolor.htm'>SetDrawColor()</a>, <a href='../doc/setfillcolor.htm'>SetFillColor()</a> y <a href='../doc/settextcolor.htm'>SetTextColor()</a>)
-y el borde de la línea se establece en 1 mm (en contra de los 0,2 por defecto) con <a href='../doc/setlinewidth.htm'>SetLineWidth()</a>.
-Finalmente, imprimimos la celda (el último parámetro a 1 indica que debe colorearse el fondo).
+y el borde de la lÃ­nea se establece en 1 mm (en contra de los 0,2 por defecto) con <a href='../doc/setlinewidth.htm'>SetLineWidth()</a>.
+Finalmente, imprimimos la celda (el Ãºltimo parÃ¡metro a 1 indica que debe colorearse el fondo).
 <br>
 <br>
-El método usado para imprimir los párrafos es <a href='../doc/multicell.htm'>MultiCell()</a>.
-Cada vez que la línea llega al extremo derecho de la celda o aparece un carácter de
-fin de línea, se ejecuta un salto de línea y se crea automáticamente otra celda debajo
+El mÃ©todo usado para imprimir los pÃ¡rrafos es <a href='../doc/multicell.htm'>MultiCell()</a>.
+Cada vez que la lÃ­nea llega al extremo derecho de la celda o aparece un carÃ¡cter de
+fin de lÃ­nea, se ejecuta un salto de lÃ­nea y se crea automÃ¡ticamente otra celda debajo
 de la actual. El texto se encuentra justificado por defecto.
 <br>
 <br>
-Se definen dos propiedades del documento: título (<a href='../doc/settitle.htm'>SetTitle()</a>) y autor (<a href='../doc/setauthor.htm'>SetAuthor()</a>).
+Se definen dos propiedades del documento: tÃ­tulo (<a href='../doc/settitle.htm'>SetTitle()</a>) y autor (<a href='../doc/setauthor.htm'>SetAuthor()</a>).
 Las propiedades pueden verse de dos maneras. La primera es abrir el documento directamente
-con Adobe Reader, vaya al menú Archivo y seleccione la opción Propiedades del documento.
-La segunda, también disponible desde el plug-in, es hacer clic con el botón derecho y
+con Adobe Reader, vaya al menÃº Archivo y seleccione la opciÃ³n Propiedades del documento.
+La segunda, tambiÃ©n disponible desde el plug-in, es hacer clic con el botÃ³n derecho y
 seleccione Propiedades del documento.
 </body>
 </html>

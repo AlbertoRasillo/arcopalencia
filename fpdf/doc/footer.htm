@@ -1,33 +1,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Footer</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>Footer</h1>
 <code>Footer()</code>
-<h2>Descripción</h2>
-Este método es usado para generar el pie de página. Es automáticamente invocado por AddPage() y Close() y no sebería ser
-invocado directamente por la aplicación. La implementación en FPDF es vacia, así que si desea un procesamiento específico
-debe hacer subclase y sobreescribir el método.
+<h2>DescripciÃ³n</h2>
+Este mÃ©todo es usado para generar el pie de pÃ¡gina. Es automÃ¡ticamente invocado por AddPage() y Close() y no seberÃ­a ser
+invocado directamente por la aplicaciÃ³n. La implementaciÃ³n en FPDF es vacia, asÃ­ que si desea un procesamiento especÃ­fico
+debe hacer subclase y sobreescribir el mÃ©todo.
 <h2>Ejemplo</h2>
 <div class="doc-source">
 <pre><code>class PDF extends FPDF
 {
-function Footer()
-{
-    // Go to 1.5 cm from bottom
-    $this-&gt;SetY(-15);
-    // Select Arial italic 8
-    $this-&gt;SetFont('Arial','I',8);
-    // Print centered page number
-    $this-&gt;Cell(0,10,'Page '.$this-&gt;PageNo(),0,0,'C');
-}
+    function Footer()
+    {
+        // Go to 1.5 cm from bottom
+        $this-&gt;SetY(-15);
+        // Select Arial italic 8
+        $this-&gt;SetFont('Arial', 'I', 8);
+        // Print centered page number
+        $this-&gt;Cell(0, 10, 'Page '.$this-&gt;PageNo(), 0, 0, 'C');
+    }
 }</code></pre>
 </div>
-<h2>Vea además</h2>
+<h2>Vea ademÃ¡s</h2>
 <a href="header.htm">Header</a>
 <hr style="margin-top:1.5em">
 <div style="text-align:center"><a href="index.htm">Inicio</a></div>

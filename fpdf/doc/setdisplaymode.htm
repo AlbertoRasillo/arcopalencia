@@ -1,40 +1,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SetDisplayMode</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>SetDisplayMode</h1>
 <code>SetDisplayMode(<b>mixed</b> zoom [, <b>string</b> layout])</code>
-<h2>Descripción</h2>
+<h2>DescripciÃ³n</h2>
 Define la forma como el documento es presentado al espectador. El nivel de acercamiento puede ser
-establecido: la páginas pueden ser presentadas completamente en pantalla, ocupar todo el ancho de
-la ventana, usar el tamaño real, ser graduado por un factor específico de acercamiento o usar el
-visor por defecto (configurado en el menú de Preferencias de Adobe Reader).
-El esquema de la página puede ser también especificado: sencillo al mismo tiempo, despliegue continuo,
+establecido: la pÃ¡ginas pueden ser presentadas completamente en pantalla, ocupar todo el ancho de
+la ventana, usar el tamaÃ±o real, ser graduado por un factor especÃ­fico de acercamiento o usar el
+visor por defecto (configurado en el menÃº de Preferencias de Adobe Reader).
+El esquema de la pÃ¡gina puede ser tambiÃ©n especificado: sencillo al mismo tiempo, despliegue continuo,
 dos columnas o por defecto el visor.
-<h2>Parámetros</h2>
+<h2>ParÃ¡metros</h2>
 <dl class="param">
 <dt><code>zoom</code></dt>
 <dd>
 El acercamiento a usar. Este puede ser uno de los siguiente valores:
 <ul>
-<li><code>fullpage</code>: despliega la página completa en la pantalla
-<li><code>fullwidth</code>: usa el ancho máximo de la pantalla
-<li><code>real</code>: usa el tamaño real (equivalente a un acercamiento de 100% )
+<li><code>fullpage</code>: despliega la pÃ¡gina completa en la pantalla
+<li><code>fullwidth</code>: usa el ancho mÃ¡ximo de la pantalla
+<li><code>real</code>: usa el tamaÃ±o real (equivalente a un acercamiento de 100% )
 <li><code>default</code>: usa el modo por defecto del visor
 </ul>
-o un número indicando el factor de acercamiento a ser usado.
+o un nÃºmero indicando el factor de acercamiento a ser usado.
 </dd>
 <dt><code>layout</code></dt>
 <dd>
-El esquema de la página. Los posibles valores son:
+El esquema de la pÃ¡gina. Los posibles valores son:
 <ul>
-<li><code>single</code>: despliega una página la tiempo
-<li><code>continuous</code>: despliega páginas continuamente
-<li><code>two</code>: despliega dos páginas en dos columnas
+<li><code>single</code>: despliega una pÃ¡gina la tiempo
+<li><code>continuous</code>: despliega pÃ¡ginas continuamente
+<li><code>two</code>: despliega dos pÃ¡ginas en dos columnas
 <li><code>default</code>: usa el modo por defecto del visor
 </ul>
 El valor por defecto es <code>default</code>.

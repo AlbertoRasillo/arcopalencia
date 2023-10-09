@@ -1,25 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AddPage</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>AddPage</h1>
 <code>AddPage([<b>string</b> orientation [, <b>mixed</b> size [, <b>int</b> rotation]]])</code>
-<h2>Descripción</h2>
-Añade una nueva página al documento. Si la página ya está presente, el método Footer() es invocado primero para producir
-el pie de página. Entonces es añadida la página, la posición actual se establece en la esquina superior izquierda de
-acuerdo a los márgenes izquierda y superior, y el Header() es invocado para mostrar el encabezado.<br>
-La fuente que fue fijada antes de ser invocada es restaurada automáticamente. No es necesario invocar nuevamente SetFont()
-si desea continuar con la misma fuente. Esto también se aplica para colores y ancho de líneas.<br>
+<h2>DescripciÃ³n</h2>
+AÃ±ade una nueva pÃ¡gina al documento. Si la pÃ¡gina ya estÃ¡ presente, el mÃ©todo Footer() es invocado primero para producir
+el pie de pÃ¡gina. Entonces es aÃ±adida la pÃ¡gina, la posiciÃ³n actual se establece en la esquina superior izquierda de
+acuerdo a los mÃ¡rgenes izquierda y superior, y el Header() es invocado para mostrar el encabezado.<br>
+La fuente que fue fijada antes de ser invocada es restaurada automÃ¡ticamente. No es necesario invocar nuevamente SetFont()
+si desea continuar con la misma fuente. Esto tambiÃ©n se aplica para colores y ancho de lÃ­neas.<br>
 El origen del sistema de coordenadas es la esquina superior izquierda y se incrementan  hacia abajo.
-<h2>Parámetros</h2>
+<h2>ParÃ¡metros</h2>
 <dl class="param">
 <dt><code>orientation</code></dt>
 <dd>
-Orientación de página. Los valores posibles son (indiferente a mayúsculas):
+OrientaciÃ³n de pÃ¡gina. Los valores posibles son (indiferente a mayÃºsculas):
 <ul>
 <li><code>P</code> o <code>Portrait</code> (normal)</li>
 <li><code>L</code> o <code>Landscape</code> (apaisado)</li>
@@ -28,7 +28,7 @@ El valor por defecto el mismo que que se ha pasado al constructor.
 </dd>
 <dt><code>size</code></dt>
 <dd>
-Formato de página. Puede ser uno de los siguientes valores (indiferente a mayúsculas):
+Formato de pÃ¡gina. Puede ser uno de los siguientes valores (indiferente a mayÃºsculas):
 <ul>
 <li><code>A3</code></li>
 <li><code>A4</code></li>
@@ -42,11 +42,11 @@ El valor por defecto es el que fue pasado al constructor.
 </dd>
 <dt><code>rotation</code></dt>
 <dd>
-Ángulo por el cual rotar la página. Debe ser un múltiplo de 90; valores positivos rotan
-la página en el sentido de las agujas del reloj. El valor por defecto es <code>0</code>.
+Ãngulo por el cual rotar la pÃ¡gina. Debe ser un mÃºltiplo de 90; valores positivos rotan
+la pÃ¡gina en el sentido de las agujas del reloj. El valor por defecto es <code>0</code>.
 </dd>
 </dl>
-<h2>Vea además</h2>
+<h2>Vea ademÃ¡s</h2>
 <a href="__construct.htm">__construct</a>,
 <a href="header.htm">Header</a>,
 <a href="footer.htm">Footer</a>,

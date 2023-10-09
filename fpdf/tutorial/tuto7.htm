@@ -1,43 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Añadiendo nuevas fuentes y codificaciones</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AÃ±adiendo nuevas fuentes y codificaciones</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
-<h1>Añadiendo nuevas fuentes y codificaciones</h1>
-Este tutorial explica cómo usar fuentes TrueType, OpenType y Type1 de forma que usted no se vea
-limitado a las fuentes incorporadas en FPDF. El otro punto de interés es que pueda elegir la
-codificación de la fuente, lo que le permitirá usar otros idiomas aparte de los europeos occidentales
-(ya que las fuentes estándar tienen muy pocos caracteres disponibles).
+<h1>AÃ±adiendo nuevas fuentes y codificaciones</h1>
+Este tutorial explica cÃ³mo usar fuentes TrueType, OpenType y Type1 de forma que usted no se vea
+limitado a las fuentes incorporadas en FPDF. El otro punto de interÃ©s es que pueda elegir la
+codificaciÃ³n de la fuente, lo que le permitirÃ¡ usar otros idiomas aparte de los europeos occidentales
+(ya que las fuentes estÃ¡ndar tienen muy pocos caracteres disponibles).
 <br>
 <br>
-Para OpenType, sólo es compatible el formato basado en TrueType (no así el basado en el Type1).<br>
-Para Type1, es necesario el archivo AFM correspondiente. Por lo general, éste es proveído con la fuente.
+Para OpenType, sÃ³lo es compatible el formato basado en TrueType (no asÃ­ el basado en el Type1).<br>
+Para Type1, es necesario el archivo AFM correspondiente. Por lo general, Ã©ste es proveÃ­do con la fuente.
 <br>
 <br>
-Añadir una nueva fuente requiere dos pasos:
+AÃ±adir una nueva fuente requiere dos pasos:
 <ul>
-<li>Generación del fichero de definición de la fuente</li>
-<li>Declaración de la fuente en el script</li>
+<li>GeneraciÃ³n del fichero de definiciÃ³n de la fuente</li>
+<li>DeclaraciÃ³n de la fuente en el script</li>
 </ul>
 
-<h2>Generación del fichero de definición de la fuente</h2>
-El primer paso consiste en generar un fichero PHP que contenga toda la información que necesita
-FPDF; además, el fichero de la fuente deberá comprimirse. Para hacer esto, se distribuye un script
-auxiliar en el directorio makefont del paquete: makefont.php. Contiene la siguiente función:
+<h2>GeneraciÃ³n del fichero de definiciÃ³n de la fuente</h2>
+El primer paso consiste en generar un fichero PHP que contenga toda la informaciÃ³n que necesita
+FPDF; ademÃ¡s, el fichero de la fuente deberÃ¡ comprimirse. Para hacer esto, se distribuye un script
+auxiliar en el directorio makefont del paquete: makefont.php. Contiene la siguiente funciÃ³n:
 <br>
 <br>
 <code>MakeFont(<b>string</b> fontfile [, <b>string</b> enc [, <b>boolean</b> embed [, <b>boolean</b> subset]]])</code>
 <dl class="param" style="margin-bottom:2em">
 <dt><code>fontfile</code></dt>
 <dd>
-<p>Ubicación del fichero .ttf, .otf o .pfb.</p>
+<p>UbicaciÃ³n del fichero .ttf, .otf o .pfb.</p>
 </dd>
 <dt><code>enc</code></dt>
 <dd>
-<p>Nombre de la codificación. Valor por defecto: <code>cp1252</code>.</p>
+<p>Nombre de la codificaciÃ³n. Valor por defecto: <code>cp1252</code>.</p>
 </dd>
 <dt><code>embed</code></dt>
 <dd>
@@ -48,7 +48,7 @@ auxiliar en el directorio makefont del paquete: makefont.php. Contiene la siguie
 <p>Si un subconjunto de la fuente o no. Valor por defecto: <code>true</code>.</p>
 </dd>
 </dl>
-El primer parámetro es el nombre del fichero de la fuente. La extensión debe ser .ttf, .otf o .pfb y
+El primer parÃ¡metro es el nombre del fichero de la fuente. La extensiÃ³n debe ser .ttf, .otf o .pfb y
 determina el tipo de fuente. Si tiene una fuente Type1 en formato ASCII (.pfa), puede convertirla a
 formato binario (.pfb) con <a href="http://www.lcdf.org/~eddietwo/type/#t1utils" target="_blank">t1utils</a>.
 <br>
@@ -56,51 +56,51 @@ formato binario (.pfb) con <a href="http://www.lcdf.org/~eddietwo/type/#t1utils"
 Para las fuentes Type1, el archivo .afm correspondiente debe estar presente en el mismo directorio.
 <br>
 <br>
-La codificación define la asociación entre un código (de 0 a 255) y un carácter. Los primeros
+La codificaciÃ³n define la asociaciÃ³n entre un cÃ³digo (de 0 a 255) y un carÃ¡cter. Los primeros
 123 son fijos y se corresponden con los caracteres ASCII; los siguientes son variables. Las
-codificaciones se almacenan en ficheros .map. Están disponibles:
+codificaciones se almacenan en ficheros .map. EstÃ¡n disponibles:
 <ul>
 <li>cp1250 (Europa Central)</li>
-<li>cp1251 (cirílico)</li>
+<li>cp1251 (cirÃ­lico)</li>
 <li>cp1252 (Europa Occidental)</li>
 <li>cp1253 (griego)</li>
 <li>cp1254 (turco)</li>
 <li>cp1255 (hebreo)</li>
-<li>cp1257 (báltico)</li>
+<li>cp1257 (bÃ¡ltico)</li>
 <li>cp1258 (vietnamita)</li>
-<li>cp874 (tailandés)</li>
+<li>cp874 (tailandÃ©s)</li>
 <li>ISO-8859-1 (Europa Occidental)</li>
 <li>ISO-8859-2 (Europa Central)</li>
-<li>ISO-8859-4 (báltico)</li>
-<li>ISO-8859-5 (cirílico)</li>
+<li>ISO-8859-4 (bÃ¡ltico)</li>
+<li>ISO-8859-5 (cirÃ­lico)</li>
 <li>ISO-8859-7 (griego)</li>
 <li>ISO-8859-9 (turco)</li>
-<li>ISO-8859-11 (tailandés)</li>
+<li>ISO-8859-11 (tailandÃ©s)</li>
 <li>ISO-8859-15 (Europa Occidental)</li>
 <li>ISO-8859-16 (Europa Central)</li>
 <li>KOI8-R (ruso)</li>
 <li>KOI8-U (ucraniano)</li>
 </ul>
-Por supuesto, la fuente debe contener los caracteres adecuados a la codificación escogida.
+Por supuesto, la fuente debe contener los caracteres adecuados a la codificaciÃ³n escogida.
 <br>
 <br>
 Existen dos formas de usar una nueva fuente: incluirla en el PDF o no. Cuando una fuente no se
-incluye, se busca en el sistema. La ventaja es que el fichero PDF es más pequeño; sin embargo,
-si la fuente no está disponible en el sistema, se usa otra como sustituta. Así que es aconsejable
-asegurarse de que la fuente en cuestión está instalada en los sistemas de los clientes. Si el
-fichero está destinado a una audiencia numerosas, es mejor incluir la fuente.
+incluye, se busca en el sistema. La ventaja es que el fichero PDF es mÃ¡s pequeÃ±o; sin embargo,
+si la fuente no estÃ¡ disponible en el sistema, se usa otra como sustituta. AsÃ­ que es aconsejable
+asegurarse de que la fuente en cuestiÃ³n estÃ¡ instalada en los sistemas de los clientes. Si el
+fichero estÃ¡ destinado a una audiencia numerosas, es mejor incluir la fuente.
 <br>
 <br>
-El último parámetro indica si el subconjunto deber ser usado o no, es decir, si o no, los caracteres
-del método de codificado deben mantenerse en la fuente embebida. Como consecuencia, si la fuente
-original fue grande, el tamaño del archivo PDF puede ser altamente reducido.
+El Ãºltimo parÃ¡metro indica si el subconjunto deber ser usado o no, es decir, si o no, los caracteres
+del mÃ©todo de codificado deben mantenerse en la fuente embebida. Como consecuencia, si la fuente
+original fue grande, el tamaÃ±o del archivo PDF puede ser altamente reducido.
 <br>
 <br>
-Después de llamar a la función (puede crear un nuevo fichero e incluir makefont.php), se creará un
+DespuÃ©s de llamar a la funciÃ³n (puede crear un nuevo fichero e incluir makefont.php), se crearÃ¡ un
 fichero .php con el mismo nombre que la fuente. Puede renombrarlo si lo desea. En caso de incluir la
-fuente, el fichero se comprime y da lugar a un segundo fichero con extensión .z (excepto si la función
-de compresión no está disponible, puesto que requiere la biblioteca Zlib para PHP). También puede
-renombrarlo, pero, en este caso, tendrá que modificar la variable <code>$file</code> en el fichero
+fuente, el fichero se comprime y da lugar a un segundo fichero con extensiÃ³n .z (excepto si la funciÃ³n
+de compresiÃ³n no estÃ¡ disponible, puesto que requiere la biblioteca Zlib para PHP). TambiÃ©n puede
+renombrarlo, pero, en este caso, tendrÃ¡ que modificar la variable <code>$file</code> en el fichero
 .php consecuentemente.
 <br>
 <br>
@@ -115,60 +115,55 @@ Ejemplo:
 que devuelve los ficheros comic.php y comic.z.
 <br>
 <br>
-Entonces tendrá que copiar los ficheros generados en el directorio de fuentes. Si
+Entonces tendrÃ¡ que copiar los ficheros generados en el directorio de fuentes. Si
 el fichero de la fuente no pudo ser comprimido, copie la fuente en lugar del .z.
 <br>
 <br>
-Otra forma de invocar a MakeFont() es a través de la línea de comandos:
+Otra forma de invocar a MakeFont() es a travÃ©s de la lÃ­nea de comandos:
 <br>
 <br>
 <kbd>php makefont\makefont.php c:\Windows\Fonts\comic.ttf cp1252</kbd>
 <br>
 <br>
-Por último, para las fuentes TrueType y OpenType, también puede generar los archivos
-<a href="http://www.fpdf.org/makefont/">en línea</a> en lugar de hacerlo manualmente.
+Por Ãºltimo, para las fuentes TrueType y OpenType, tambiÃ©n puede generar los archivos
+<a href="http://www.fpdf.org/makefont/">en lÃ­nea</a> en lugar de hacerlo manualmente.
 
-<h2>Declaración de la fuente en el script</h2>
-El segundo paso es el más simple. Sólo necesita llamar al método <a href='../doc/addfont.htm'>AddFont()</a>:
+<h2>DeclaraciÃ³n de la fuente en el script</h2>
+El segundo paso es el mÃ¡s simple. SÃ³lo necesita llamar al mÃ©todo <a href='../doc/addfont.htm'>AddFont()</a>:
 <div class="source">
 <pre><code>$pdf<span class="kw">-&gt;</span>AddFont<span class="kw">(</span><span class="str">'Comic'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span><span class="str">'comic.php'</span><span class="kw">);
 </span></code></pre>
 </div>
 Y la fuente queda disponible (en los estilos normal y subrayado), lista para usar como las otras.
-Si hubiéramos trabajado con la Comic Sans MS Bold (comicbd.ttf), hubiésemos escrito:
+Si hubiÃ©ramos trabajado con la Comic Sans MS Bold (comicbd.ttf), hubiÃ©semos escrito:
 <div class="source">
 <pre><code>$pdf<span class="kw">-&gt;</span>AddFont<span class="kw">(</span><span class="str">'Comic'</span><span class="kw">,</span><span class="str">'B'</span><span class="kw">,</span><span class="str">'comicbd.php'</span><span class="kw">);
 </span></code></pre>
 </div>
 
 <h2>Ejemplo</h2>
-Veamos ahora un ejemplo completo. Vamos a utilizar la fuente <a href="http://www.abstractfonts.com/font/52" target="_blank">Calligrapher</a>.
-El primer paso es la generación de los archivos de la fuente:
+Veamos ahora un ejemplo completo. Vamos a utilizar la fuente <a href="https://fonts.google.com/specimen/Ceviche+One" target="_blank">Ceviche One</a>.
+El primer paso es la generaciÃ³n de los archivos de la fuente:
 <div class="source">
 <pre><code>&lt;?php
 <span class="kw">require(</span><span class="str">'makefont/makefont.php'</span><span class="kw">);
 
-</span>MakeFont<span class="kw">(</span><span class="str">'calligra.ttf'</span><span class="kw">,</span><span class="str">'cp1252'</span><span class="kw">);
+</span>MakeFont<span class="kw">(</span><span class="str">'CevicheOne-Regular.ttf'</span><span class="kw">,</span><span class="str">'cp1252'</span><span class="kw">);
 </span>?&gt;</code></pre>
 </div>
-El script nos devolverá el siguiente informe:
+El script nos devolverÃ¡ el siguiente informe:
 <br>
 <br>
-<b>Warning:</b> character Euro is missing<br>
-<b>Warning:</b> character zcaron is missing<br>
-Font file compressed: calligra.z<br>
-Font definition file generated: calligra.php<br>
+Font file compressed: CevicheOne-Regular.z<br>
+Font definition file generated: CevicheOne-Regular.php<br>
 <br>
-El carácter del euro no está en la fuente (es muy antigua). Otro carácter tampoco se encuentra en la fuente.
+Alternativamente, podrÃ­amos haber utilizado la lÃ­nea de comandos:
 <br>
 <br>
-Alternativamente, podríamos haber utilizado la línea de comandos:
+<kbd>php makefont\makefont.php CevicheOne-Regular.ttf cp1252</kbd>
 <br>
 <br>
-<kbd>php makefont\makefont.php calligra.ttf cp1252</kbd>
-<br>
-<br>
-o haber usado el generado en línea.
+o haber usado el generado en lÃ­nea.
 <br>
 <br>
 Podemos copiar estos dos ficheros en el directorio de fuentes (font) y escribir el script:
@@ -177,13 +172,13 @@ Podemos copiar estos dos ficheros en el directorio de fuentes (font) y escribir 
 <span class="kw">require(</span><span class="str">'fpdf.php'</span><span class="kw">);
 
 </span>$pdf <span class="kw">= new </span>FPDF<span class="kw">();
-</span>$pdf<span class="kw">-&gt;</span>AddFont<span class="kw">(</span><span class="str">'Calligrapher'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span><span class="str">'calligra.php'</span><span class="kw">);
+</span>$pdf<span class="kw">-&gt;</span>AddFont<span class="kw">(</span><span class="str">'CevicheOne'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span><span class="str">'CevicheOne-Regular.php'</span><span class="kw">);
 </span>$pdf<span class="kw">-&gt;</span>AddPage<span class="kw">();
-</span>$pdf<span class="kw">-&gt;</span>SetFont<span class="kw">(</span><span class="str">'Calligrapher'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span>35<span class="kw">);
+</span>$pdf<span class="kw">-&gt;</span>SetFont<span class="kw">(</span><span class="str">'CevicheOne'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span>45<span class="kw">);
 </span>$pdf<span class="kw">-&gt;</span>Write<span class="kw">(</span>10<span class="kw">,</span><span class="str">'Enjoy new fonts with FPDF!'</span><span class="kw">);
 </span>$pdf<span class="kw">-&gt;</span>Output<span class="kw">();
 </span>?&gt;</code></pre>
 </div>
-<p class='demo'><a href='tuto7.php' target='_blank' class='demo'>[Demo]</a></p>
+<p class='demo'><a href='tuto7.php' target='_blank' class='demo'>[Ejecutar]</a></p>
 </body>
 </html>

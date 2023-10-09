@@ -1,40 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SetFont</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>SetFont</h1>
 <code>SetFont(<b>string</b> family [, <b>string</b> style [, <b>float</b> size]])</code>
-<h2>Descripción</h2>
-Establece la fuente usada para imprimir cadenas de carácteres. Es obligatorio invocar este método por lo menos una vez antes de imprimir texto.<br>
-La fuente puede ser una estándar o una adicionada via el método AddFont(). La fuentes estándar usan codificación cp1252 (Western Europe) de Windows.<br>
-El método puede ser invocado antes que la primera página sea creada y es mantenido de página a página.<br>
-Si sólo desea cambiar el tamaño de la fuente actual, es más simple invocar SetFontSize().<br>
+<h2>DescripciÃ³n</h2>
+Establece la fuente usada para imprimir cadenas de carÃ¡cteres. Es obligatorio invocar este mÃ©todo por lo menos una vez antes de imprimir texto.<br>
 <br>
-<strong>Nota:</strong> los archivos de definición de fuente deben ser accesibles. Se buscan en este orden:
-<ul>
-<li>El directorio especificado por la constante <code>FPDF_FONTPATH</code> (si es que ha sido definida)
-<li>El directorio de fuentes incluido en el directorio que contiene fpdf.php (si es que existe)
-<li>Cualquier directorio accesible mediante <code>include()</code>
-</ul>
-Ejemplo del primer casa:
-<div class="doc-source">
-<pre><code>define('FPDF_FONTPATH','/home/www/font');
-require('fpdf.php');</code></pre>
-</div>
-Si el archivo correspondiente a la fuente requerida no es encuentra, se genera el error "Could not include
-font definition file".
-<h2>Parámetros</h2>
+La fuente puede ser una estÃ¡ndar o una adicionada via el mÃ©todo AddFont(). La fuentes estÃ¡ndar usan codificaciÃ³n cp1252 (Western Europe) de Windows.<br>
+<br>
+El mÃ©todo puede ser invocado antes que la primera pÃ¡gina sea creada y es mantenido de pÃ¡gina a pÃ¡gina.<br>
+<br>
+Si sÃ³lo desea cambiar el tamaÃ±o de la fuente actual, es mÃ¡s simple invocar SetFontSize().
+<h2>ParÃ¡metros</h2>
 <dl class="param">
 <dt><code>family</code></dt>
 <dd>
-Familia de fuente. Puede ser un nombre definido por AddFont() o una de las familias estándar (no sensible a mayúsculas o minúsculas):
+Familia de fuente. Puede ser un nombre definido por AddFont() o una de las familias estÃ¡ndar (no sensible a mayÃºsculas o minÃºsculas):
 <ul>
 <li><code>Courier</code> (fixed-width)
-<li><code>Helvetica</code> o <code>Arial</code> (sinónimo; sans serif)
+<li><code>Helvetica</code> o <code>Arial</code> (sinÃ³nimo; sans serif)
 <li><code>Times</code> (serif)
 <li><code>Symbol</code> (symbolic)
 <li><code>ZapfDingbats</code> (symbolic)
@@ -43,21 +32,21 @@ Tambien es posible pasar un cadena vacia. En este caso, se mantiene la familia a
 </dd>
 <dt><code>style</code></dt>
 <dd>
-Estilo de fuente. Los valores posibles son (no sensible a mayúsculas o minúsculas):
+Estilo de fuente. Los valores posibles son (no sensible a mayÃºsculas o minÃºsculas):
 <ul>
 <li>cadena vacia: regular
 <li><code>B</code>: bold
 <li><code>I</code>: italic
 <li><code>U</code>: underline
 </ul>
-o cualquier combinación. El valor por defecto es regular.
+o cualquier combinaciÃ³n. El valor por defecto es regular.
 Los estilos Bold e italic no aplican para <code>Symbol</code> y <code>ZapfDingbats</code>.
 </dd>
 <dt><code>size</code></dt>
 <dd>
-Tamaño de fuente en puntos.
+TamaÃ±o de fuente en puntos.
 <br>
-El valor por defecto es el tamaño actual. Si ningún tamaño ha sido especificado desde el comienzo del documento, toma el valor de 12.
+El valor por defecto es el tamaÃ±o actual. Si ningÃºn tamaÃ±o ha sido especificado desde el comienzo del documento, toma el valor de 12.
 </dd>
 </dl>
 <h2>Ejemplo</h2>
@@ -65,13 +54,13 @@ El valor por defecto es el tamaño actual. Si ningún tamaño ha sido especificado 
 <pre><code>// Times regular 12
 $pdf-&gt;SetFont('Times');
 // Arial bold 14
-$pdf-&gt;SetFont('Arial','B',14);
+$pdf-&gt;SetFont('Arial', 'B', 14);
 // Elimina bold
 $pdf-&gt;SetFont('');
 // Times bold, italic y underlined 14
-$pdf-&gt;SetFont('Times','BIU');</code></pre>
+$pdf-&gt;SetFont('Times', 'BIU');</code></pre>
 </div>
-<h2>Vea además</h2>
+<h2>Vea ademÃ¡s</h2>
 <a href="addfont.htm">AddFont</a>,
 <a href="setfontsize.htm">SetFontSize</a>,
 <a href="cell.htm">Cell</a>,

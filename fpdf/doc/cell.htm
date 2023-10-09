@@ -1,23 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cell</title>
 <link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>Cell</h1>
 <code>Cell(<b>float</b> w [, <b>float</b> h [, <b>string</b> txt [, <b>mixed</b> border [, <b>int</b> ln [, <b>string</b> align [, <b>boolean</b> fill [, <b>mixed</b> link]]]]]]])</code>
-<h2>Descripción</h2>
-Imprime una celda (de área rectangular) bordes opcionales, color de fondo y secuencia de carácteres
-La esquina superior izquierda de la celda corresponde a la posición actual. El texto puede ser alineado o centrado. Despues de invocar, la posición actual se desplaza a la derecha o la siguietne línea. Es posible poner una referencia en el texto.
+<h2>DescripciÃ³n</h2>
+Imprime una celda (de Ã¡rea rectangular) bordes opcionales, color de fondo y secuencia de carÃ¡cteres
+La esquina superior izquierda de la celda corresponde a la posiciÃ³n actual. El texto puede ser alineado o centrado. Despues de invocar, la posiciÃ³n actual se desplaza a la derecha o la siguietne lÃ­nea. Es posible poner una referencia en el texto.
 <br>
-Si esta el salto de página automático habilitado y la celda esta por fuera del límite, es realizado un salto de página antes de producir la salida.
-<h2>Parámetros</h2>
+Si esta el salto de pÃ¡gina automÃ¡tico habilitado y la celda esta por fuera del lÃ­mite, es realizado un salto de pÃ¡gina antes de producir la salida.
+<h2>ParÃ¡metros</h2>
 <dl class="param">
 <dt><code>w</code></dt>
 <dd>
-Ancho de Celda. Si es <code>0</code>, la celda se extiende hasta la márgen derecha.
+Ancho de Celda. Si es <code>0</code>, la celda se extiende hasta la mÃ¡rgen derecha.
 </dd>
 <dt><code>h</code></dt>
 <dd>
@@ -31,12 +31,12 @@ Valor por defecto: cadena vacia.
 </dd>
 <dt><code>border</code></dt>
 <dd>
-Indica si los bordes deben se dibujados alrededor de la celda. El valor puede ser un número:
+Indica si los bordes deben se dibujados alrededor de la celda. El valor puede ser un nÃºmero:
 <ul>
 <li><code>0</code>: sin borde</li>
 <li><code>1</code>: marco</li>
 </ul>
-o una cadena que contenga una o una combinación de los siguientes caracteres (en cualquier orden):
+o una cadena que contenga una o una combinaciÃ³n de los siguientes caracteres (en cualquier orden):
 <ul>
 <li><code>L</code>: izquierda</li>
 <li><code>T</code>: superior</li>
@@ -47,10 +47,10 @@ Valor por defecto: <code>0</code>.
 </dd>
 <dt><code>ln</code></dt>
 <dd>
-Indica donde la posición actula debería ir antes de invocar. Los valores posibles son:
+Indica donde la posiciÃ³n actula deberÃ­a ir antes de invocar. Los valores posibles son:
 <ul>
 <li><code>0</code>: a la derecha</li>
-<li><code>1</code>: al comienzo de la siguiente línea</li>
+<li><code>1</code>: al comienzo de la siguiente lÃ­nea</li>
 <li><code>2</code>: debajo</li>
 </ul>
 Poner <code>1</code> es equivalente a poner <code>0</code> y llamar justo despues Ln().
@@ -60,9 +60,9 @@ Valor por defecto: <code>0</code>.
 <dd>
 Permite centrar o alinear el texto. Los posibles valores son:
 <ul>
-<li><code>L</code> o una cadena vacia: alineación izquierda (valor por defecto)</li>
+<li><code>L</code> o una cadena vacia: alineaciÃ³n izquierda (valor por defecto)</li>
 <li><code>C</code>: centro</li>
-<li><code>R</code>: alineación derecha</li>
+<li><code>R</code>: alineaciÃ³n derecha</li>
 </ul>
 </dd>
 <dt><code>fill</code></dt>
@@ -78,13 +78,13 @@ URL o identificador retornado por AddLink().
 <h2>Ejemplo</h2>
 <div class="doc-source">
 <pre><code>// Set font
-$pdf-&gt;SetFont('Arial','B',16);
+$pdf-&gt;SetFont('Arial', 'B', 16);
 // Move to 8 cm to the right
 $pdf-&gt;Cell(80);
-// Texto centrado en una celda con cuadro 20*10 mm y salto de línea
-$pdf-&gt;Cell(20,10,'Title',1,1,'C');</code></pre>
+// Texto centrado en una celda con cuadro 20*10 mm y salto de lÃ­nea
+$pdf-&gt;Cell(20, 10, 'Title', 1, 1, 'C');</code></pre>
 </div>
-<h2>Vea además</h2>
+<h2>Vea ademÃ¡s</h2>
 <a href="setfont.htm">SetFont</a>,
 <a href="setdrawcolor.htm">SetDrawColor</a>,
 <a href="setfillcolor.htm">SetFillColor</a>,
