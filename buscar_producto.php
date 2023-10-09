@@ -27,27 +27,41 @@
 	<section id="seccion_pro">
 	<?php 
 		include("conectar.php");		
-		$fila=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
-			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
-		 	from vende as a, productor pr, producto p
-			where fecha=(
-		    select max(fecha) from vende as b
-		    where a.id_productor=b.id_productor
-		    and a.id_producto=b.id_producto
-		    and pr.id_productor=b.id_productor
-		    and p.id_producto=b.id_producto) and p.estado='activado' and fecha_fin is NULL group by a.id_producto,a.id_productor");	
+		$fila=mysqli_query($con,"SELECT p.id_producto AS id_pro, p.categoria, p.nombre AS pro_nom, p.medida, p.descripcion,
+			     a.precio, pr.nombre AS prod_nom, pr.apellidos AS prod_ape
+			FROM vende AS a
+			JOIN (
+			    SELECT id_productor, id_producto, MAX(fecha) AS max_fecha
+			    FROM vende
+			    GROUP BY id_productor, id_producto
+			) AS max_fecha_vende
+			ON a.id_productor = max_fecha_vende.id_productor
+			AND a.id_producto = max_fecha_vende.id_producto
+			JOIN productor AS pr
+			ON a.id_productor = pr.id_productor
+			JOIN producto AS p
+			ON a.id_producto = p.id_producto
+			WHERE p.estado = 'activado' AND a.fecha = max_fecha_vende.max_fecha AND a.fecha_fin IS NULL;
+			");	
 
 		if (isset($_GET['categoria'])) {
 			$cat=$_GET['categoria'];
-			$fila=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
-			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
-		 	from vende as a, productor pr, producto p
-			where fecha=(
-		    select max(fecha) from vende as b
-		    where a.id_productor=b.id_productor
-		    and a.id_producto=b.id_producto
-		    and pr.id_productor=b.id_productor
-		    and p.id_producto=b.id_producto) and categoria='$cat' and p.estado='activado' and fecha_fin is NULL group by a.id_producto,a.id_productor");
+			$fila=mysqli_query($con,"SELECT p.id_producto AS id_pro, p.categoria, p.nombre AS pro_nom, p.medida, p.descripcion,
+			       a.precio, pr.nombre AS prod_nom, pr.apellidos AS prod_ape
+			FROM vende AS a
+			JOIN (
+			    SELECT id_productor, id_producto, MAX(fecha) AS max_fecha
+			    FROM vende
+			    GROUP BY id_productor, id_producto
+			) AS max_fecha_vende
+			ON a.id_productor = max_fecha_vende.id_productor
+			AND a.id_producto = max_fecha_vende.id_producto
+			JOIN productor AS pr
+			ON a.id_productor = pr.id_productor
+			JOIN producto AS p
+			ON a.id_producto = p.id_producto
+			WHERE p.categoria = '$cat' AND p.estado = 'activado' AND a.fecha_fin IS NULL;
+			");
 		}
 	 ?>
 	 <article>
@@ -101,15 +115,26 @@
 	 	}
 	 	}elseif (isset($_GET['criterio'])) {
 	 	$criterio=$_GET['criterio'];
-	 	$buscar=mysqli_query($con,"select p.id_producto as id_pro,categoria,p.nombre as pro_nom,p.medida,p.descripcion,
-			a.precio,pr.nombre as prod_nom,pr.apellidos as prod_ape
-		 	from vende as a, productor pr, producto p
-			where fecha=(
-		    select max(fecha) from vende as b
-		    where a.id_productor=b.id_productor
-		    and a.id_producto=b.id_producto
-		    and pr.id_productor=b.id_productor
-		    and p.id_producto=b.id_producto) and p.estado='activado' and fecha_fin is NULL and p.nombre like '%$criterio%' group by a.id_producto,a.id_productor");
+	 	$buscar=mysqli_query($con,"SELECT p.id_producto AS id_pro, p.categoria, p.nombre AS pro_nom, p.medida, p.descripcion,
+			       a.precio, pr.nombre AS prod_nom, pr.apellidos AS prod_ape
+			FROM vende AS a
+			JOIN (
+			    SELECT id_productor, id_producto, MAX(fecha) AS max_fecha
+			    FROM vende
+			    WHERE fecha_fin IS NULL
+			    GROUP BY id_productor, id_producto
+			) AS max_fecha_vende
+			ON a.id_productor = max_fecha_vende.id_productor
+			AND a.id_producto = max_fecha_vende.id_producto
+			JOIN productor AS pr
+			ON a.id_productor = pr.id_productor
+			JOIN producto AS p
+			ON a.id_producto = p.id_producto
+			WHERE p.estado = 'activado'
+			AND p.nombre LIKE '%$criterio%'
+			AND a.fecha = max_fecha_vende.max_fecha
+			GROUP BY a.id_producto, a.id_productor;
+			");
 				while ($celda = mysqli_fetch_array($buscar,MYSQLI_ASSOC)) {
 		 	echo"<tr>";	
 			 			echo"<td>".$celda['pro_nom']."</td>";
