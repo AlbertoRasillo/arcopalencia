@@ -21,15 +21,43 @@
 		include("../conectar.php");
 		if (isset($_GET['id_producto'])) {
 			
-			$editarproducto=mysqli_query($con,"select a.id_vende as id_vende,p.categoria as categoria,p.medida as medida,p.descripcion as descripcion,
-					p.estado as estado,p.id_producto as id_producto,pr.id_productor as id_productor,pr.nombre,p.nombre as nombre,a.precio, a.fecha
-    				from vende as a, productor pr, producto p
-    				where fecha=(
-					    select max(fecha) from vende as b
-					    where a.id_productor=b.id_productor
-					    and a.id_producto=b.id_producto
-					    and pr.id_productor=b.id_productor
-						and p.id_producto=b.id_producto) and p.id_producto='$_GET[id_producto]' and fecha_fin is null group by a.id_producto,a.id_productor");
+			$editarproducto=mysqli_query($con,"
+			SELECT
+			    a.id_vende AS id_vende,
+			    p.categoria AS categoria,
+			    p.medida AS medida,
+			    p.descripcion AS descripcion,
+			    p.estado AS estado,
+			    p.id_producto AS id_producto,
+			    pr.id_productor AS id_productor,
+			    pr.nombre,
+			    p.nombre AS nombre,
+			    a.precio,
+			    a.fecha
+			FROM
+			    vende AS a
+			JOIN
+			    productor AS pr ON a.id_productor = pr.id_productor
+			JOIN
+			    producto AS p ON a.id_producto = p.id_producto
+			WHERE
+			    a.fecha = (
+				SELECT
+				    MAX(fecha)
+				FROM
+				    vende AS b
+				WHERE
+				    a.id_productor = b.id_productor
+				    AND a.id_producto = b.id_producto
+				    AND pr.id_productor = b.id_productor
+				    AND p.id_producto = b.id_producto
+			    )
+			    AND p.id_producto = '$_GET[id_producto]'
+			    AND fecha_fin IS NULL
+			GROUP BY
+			    a.id_producto,
+			    a.id_productor;
+			");
 			$editarproducto = mysqli_fetch_array($editarproducto,MYSQLI_ASSOC);
 			print_r($editarproducto);
 		}
