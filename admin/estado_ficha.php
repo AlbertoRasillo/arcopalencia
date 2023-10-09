@@ -2,17 +2,18 @@
 	include("../conectar.php");
 	if (isset($_GET['id_producto'])) {
 			$id_producto=$_GET['id_producto'];
-		$estado=$_GET['estado'];
+          		$estado=$_GET['estado'];
+			$criterio = $_GET['criterio'];
 		if ($estado=="activar") {
 			$prod_esta_acti="update producto set estado='activado' where id_producto='$id_producto'";
 			mysqli_query($con,$prod_esta_acti);
 			$pro_esta_acti="update productor inner join vende on productor.id_productor=vende.id_productor set estado='activado' where vende.id_producto='$id_producto'";
 			mysqli_query($con,$pro_esta_acti);
-			header("location: productos.php");
+			header("location: productos.php?estado=desactivado&criterio=$criterio");
 		}elseif($estado=="desactivar"){
 			$prod_esta_desa="update producto set estado='desactivado' where id_producto='$id_producto'";
 			mysqli_query($con,$prod_esta_desa);
-			header("location: productos.php");
+			header("location: productos.php?estado=activado&criterio=$criterio");
 		}else{header("location: productos.php");}
 	}
 	if (isset($_GET['id_socio'])) {
