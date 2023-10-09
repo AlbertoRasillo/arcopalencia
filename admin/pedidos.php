@@ -79,14 +79,52 @@
 				$fecha_inicio=$_GET['fecha_inicio'];
 				$fecha_fin=$_GET['fecha_fin'];
 				if ($fecha_inicio<=$fecha_fin) {
-									$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by c.id_cabecera_pedido,pr.id_producto");
-				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by pr.id_producto");
+					$pedidos=mysqli_query($con,"
+				SELECT
+				    s.id_socio AS id_socio,
+				    c.id_cabecera_pedido,
+				    v.id_productor,
+				    s.nombre AS nombre,
+				    s.apellidos,
+				    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
+				    p.cantidad,
+				    v.precio,
+				    pr.nombre AS producto
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
+				GROUP BY
+				    c.id_cabecera_pedido,
+				    pr.id_producto;
+				");
+					$total=mysqli_query($con,"
+				SELECT
+				    SUM(p.cantidad) AS sum_cant,
+				    pr.nombre AS prod_nom
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
+				GROUP BY
+				    pr.id_producto;
+				");
 				echo"<table id='tabla'>";
 				echo"<tr>";
 					echo"<th>Socio</th>";
@@ -108,16 +146,16 @@
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
 					if (is_null($pedido)==true){
-                                           $pedido=$fila[id_cabecera_pedido];
-                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila['id_cabecera_pedido'];
+                                           $total_pedido = $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-					}elseif ($pedido==$fila[id_cabecera_pedido]){
-                                           $total_pedido += $fila[precio]*$fila[cantidad];
+					}elseif ($pedido==$fila['id_cabecera_pedido']){
+                                           $total_pedido += $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                        }elseif ($pedido!=$fila['id_cabecera_pedido']){
                                            $total_pedido = 0;
-					   $total_pedido = $fila[precio]*$fila[cantidad];
-                                           $pedido=$fila[id_cabecera_pedido];
+					   $total_pedido = $fila['precio']*$fila['cantidad'];
+                                           $pedido=$fila['id_cabecera_pedido'];
                                            echo"<td>$total_pedido</td>";
                                         }
 				echo"</tr>";
@@ -145,14 +183,51 @@
 				$fecha_fin=$_GET['fecha_fin'];
 				$id_productor=$_GET['id_productor'];
 				if ($fecha_inicio<=$fecha_fin) {
-									$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY ");
-				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and v.id_productor='$id_productor' and c.fecha between '$fecha_inicio' and '$fecha_fin' + INTERVAL 1 DAY group by pr.id_producto");
+					$pedidos=mysqli_query($con,"
+				SELECT
+				    s.id_socio AS id_socio,
+				    c.id_cabecera_pedido,
+				    v.id_productor,
+				    s.nombre AS nombre,
+				    s.apellidos,
+				    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
+				    p.cantidad,
+				    v.precio,
+				    pr.nombre AS producto
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    v.id_productor = '$id_productor'
+				    AND c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY);
+				");
+					$total=mysqli_query($con,"
+				SELECT
+				    SUM(p.cantidad) AS sum_cant,
+				    pr.nombre AS prod_nom
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    v.id_productor = '$id_productor'
+				    AND c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
+				GROUP BY
+				    pr.id_producto;
+				");
 				echo"<table id='tabla'>";
 				echo"<tr>";
 					echo"<th>Socio</th>";
@@ -172,16 +247,16 @@
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
 					if (is_null($pedido)==true){
-                                           $pedido=$fila[id_cabecera_pedido];
-                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila['id_cabecera_pedido'];
+                                           $total_pedido = $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-					}elseif ($pedido==$fila[id_cabecera_pedido]){
-                                           $total_pedido += $fila[precio]*$fila[cantidad];
+					}elseif ($pedido==$fila['id_cabecera_pedido']){
+                                           $total_pedido += $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                        }elseif ($pedido!=$fila['id_cabecera_pedido']){
                                            $total_pedido = 0;
-					   $total_pedido = $fila[precio]*$fila[cantidad];
-                                           $pedido=$fila[id_cabecera_pedido];
+					   $total_pedido = $fila['precio']*$fila['cantidad'];
+                                           $pedido=$fila['id_cabecera_pedido'];
                                            echo"<td>$total_pedido</td>";
                                         }
 				echo"</tr>";
@@ -206,14 +281,51 @@
 				}
 				if (isset($_GET['num_pedido']) and is_numeric($_GET['num_pedido']) and $_GET['num_pedido']!=0) {
 					$num_pedido=$_GET['num_pedido'];
-					$pedidos=mysqli_query($con,"select s.id_socio as id_socio,c.id_cabecera_pedido,v.id_productor,s.nombre as nombre, s.apellidos,DATE_FORMAT(c.fecha,'%d-%m-%Y %T') as fecha,p.cantidad,v.precio,pr.nombre as producto
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.id_cabecera_pedido=$num_pedido group by pr.id_producto");
-				$total=mysqli_query($con,"select sum(p.cantidad) as sum_cant,pr.nombre as prod_nom
-				    from socio s,cabecera_pedido c,pedido p,vende v,producto pr
-				    where s.id_socio=c.id_socio and c.id_cabecera_pedido=p.id_cabecera_pedido and
-				    p.id_vende=v.id_vende and pr.id_producto=v.id_producto and c.id_cabecera_pedido=$num_pedido group by pr.id_producto");
+					$pedidos=mysqli_query($con,"
+				SELECT
+				    s.id_socio AS id_socio,
+				    c.id_cabecera_pedido,
+				    v.id_productor,
+				    s.nombre AS nombre,
+				    s.apellidos,
+				    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
+				    p.cantidad,
+				    v.precio,
+				    pr.nombre AS producto
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    c.id_cabecera_pedido = $num_pedido
+				GROUP BY
+				    pr.id_producto;
+				");
+					$total=mysqli_query($con,"
+				SELECT
+				    SUM(p.cantidad) AS sum_cant,
+				    pr.nombre AS prod_nom
+				FROM
+				    socio AS s
+				JOIN
+				    cabecera_pedido AS c ON s.id_socio = c.id_socio
+				JOIN
+				    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+				JOIN
+				    vende AS v ON p.id_vende = v.id_vende
+				JOIN
+				    producto AS pr ON pr.id_producto = v.id_producto
+				WHERE
+				    c.id_cabecera_pedido = $num_pedido
+				GROUP BY
+				    pr.id_producto;
+				");
 				echo"<table id='tabla'>";
 				echo"<tr>";
 					echo"<th>Socio</th>";
@@ -233,16 +345,16 @@
 					echo"<td>$fila[fecha]</td>";
 					echo"<td>$fila[id_cabecera_pedido]</td>";
 					if (is_null($pedido)==true){
-                                           $pedido=$fila[id_cabecera_pedido];
-                                           $total_pedido = $fila[precio]*$fila[cantidad];
+                                           $pedido=$fila['id_cabecera_pedido'];
+                                           $total_pedido = $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-					}elseif ($pedido==$fila[id_cabecera_pedido]){
-                                           $total_pedido += $fila[precio]*$fila[cantidad];
+					}elseif ($pedido==$fila['id_cabecera_pedido']){
+                                           $total_pedido += $fila['precio']*$fila['cantidad'];
                                            echo"<td>$total_pedido</td>";
-                                        }elseif ($pedido!=$fila[id_cabecera_pedido]){
+                                        }elseif ($pedido!=$fila['id_cabecera_pedido']){
                                            $total_pedido = 0;
-					   $total_pedido = $fila[precio]*$fila[cantidad];
-                                           $pedido=$fila[id_cabecera_pedido];
+					   $total_pedido = $fila['precio']*$fila['cantidad'];
+                                           $pedido=$fila['id_cabecera_pedido'];
                                            echo"<td>$total_pedido</td>";
                                         }
 				echo"</tr>";
