@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <script src="../jquery/jquery-1.9.1.js"></script>
     <script src="../jquery/ui/jquery.ui.core.js"></script>
     <script src="../jquery/ui/jquery.ui.widget.js"></script>
     <script src="../jquery/ui/jquery.ui.datepicker.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="../css/estilo_admin2.css">
     <?php include("comprobar_acceso.php") ?>
     <?php include("../conectar.php") ?>
@@ -125,7 +127,8 @@
                 GROUP BY
                     pr.id_producto;
                 ");
-                echo"<table id='tabla'>";
+                echo"<table id='tabla' class='display'>";
+                echo"<thead>";
                 echo"<tr>";
                     echo"<th>Socio</th>";
                     echo"<th>Producto</th>";
@@ -135,8 +138,9 @@
                     echo"<th>Nº Pedido</th>";
                     echo"<th>Precio total de pedido</th>";
                 echo"</tr>";
-                                $total_pedido = 0;
-                                $pedido = NULL;
+                echo"</thead>";
+                $total_pedido = 0;
+                $pedido = NULL;
                 while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
                 echo"<tr>";
                     echo"<td>$fila[nombre] $fila[apellidos]</td>";
@@ -385,5 +389,10 @@
     </aside>
     <footer id="pie"><?php include("../pie.php"); ?></footer>
 </div>
+    <script>
+    $(document).ready(function () {
+        $('#tabla').DataTable();
+    });
+    </script>
 </body>
 </html>
