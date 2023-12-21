@@ -79,3 +79,13 @@ th{
 	width: 100%;
 }
 #error_fecha{font-weight:bold;color:red;}
+
+.dataTables_wrapper .sorting_asc,
+.dataTables_wrapper .sorting_desc {
+    background-color: #5bc0de;
+    color: #fff;
+}
+.dataTables_wrapper .sorting_asc:hover,
+.dataTables_wrapper .sorting_desc:hover {
+    background-color: #31b0d5;
+}
