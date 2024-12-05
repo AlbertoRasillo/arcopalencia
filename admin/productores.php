@@ -1,7 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="es">
+    <meta name="language" content="es">
     <link rel="stylesheet" href="../css/estilo_admin2.css">
     <title></title>
     <?php include("comprobar_acceso.php") ?>
