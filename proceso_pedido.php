@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="es">
+    <meta name="language" content="es">
     <link rel="stylesheet" href="css/estilo_socio.css">
     <title></title>
     <?php include("comprobar_acceso.php") ?>

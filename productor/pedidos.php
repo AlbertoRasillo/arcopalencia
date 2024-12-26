@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Language" content="es">
+    <meta name="language" content="es">
     <link rel="stylesheet" href="../jquery/themes/base/jquery.ui.all.css">
     <script src="../jquery/jquery-1.9.1.js"></script>
     <script src="../jquery/ui/jquery.ui.core.js"></script>
