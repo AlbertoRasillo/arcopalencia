@@ -73,8 +73,9 @@
                                 downloadXls();
                   }
                               ?>
-                              <form method="post">
-                              <input type="submit" name="download" class="button" value="DescargaXML" />
+                              <form method="post" id="downloadForm">
+                              <input type="hidden" name="table_data" id="table_data" />
+                              <input type="submit" name="download" class="button" value="Descargar XLS" />
                               </form>
             </article>
             <article>
@@ -410,6 +411,19 @@
             }
         });
     });
+    </script>
+    <script>
+        // Capturar las tablas en el formulario antes de enviarlo
+      document.getElementById('downloadForm').addEventListener('submit', function () {
+        const table1 = document.getElementById('tabla').outerHTML;
+        const table2 = document.getElementById('tabla_ped_tot').outerHTML;
+
+        const combinedTables = table1 + "<br>" + table2;
+	// Codificamos el contenido de las tablas en base64
+        document.getElementById('table_data').value = btoa(unescape(encodeURIComponent(combinedTables)));
+
+      });
+
     </script>
 </body>
 </html>
