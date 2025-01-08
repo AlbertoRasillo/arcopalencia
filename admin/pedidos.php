@@ -413,17 +413,58 @@
     });
     </script>
     <script>
-        // Capturar las tablas en el formulario antes de enviarlo
-      document.getElementById('downloadForm').addEventListener('submit', function () {
-        const table1 = document.getElementById('tabla').outerHTML;
-        const table2 = document.getElementById('tabla_ped_tot').outerHTML;
+	$('#downloadForm').on('submit', function () {
+	    // Obtén todos los datos de la tabla principal usando DataTables API
+	    const table = $('#tabla').DataTable();
+	    const allData = table.rows().data(); // Todos los datos, no solo los visibles
 
-        const combinedTables = table1 + "<br>" + table2;
-	// Codificamos el contenido de las tablas en base64
-        document.getElementById('table_data').value = btoa(unescape(encodeURIComponent(combinedTables)));
+	    // Genera el HTML para la tabla principal
+	    let tableHtml = '<table>';
+	    tableHtml += '<thead>';
+	    $('#tabla thead tr').each(function () {
+		tableHtml += '<tr>';
+		$(this).find('th').each(function () {
+		    tableHtml += `<th>${$(this).text()}</th>`;
+		});
+		tableHtml += '</tr>';
+	    });
+	    tableHtml += '</thead>';
+	    tableHtml += '<tbody>';
+	    allData.each(function (row) {
+		tableHtml += '<tr>';
+		for (let cell of row) {
+		    tableHtml += `<td>${cell}</td>`;
+		}
+		tableHtml += '</tr>';
+	    });
+	    tableHtml += '</tbody>';
+	    tableHtml += '</table>';
 
-      });
+	    // Añade la tabla de totales debajo
+	    tableHtml += '<br/><table>';
+	    tableHtml += '<thead>';
+	    $('#tabla_ped_tot thead tr').each(function () {
+		tableHtml += '<tr>';
+		$(this).find('th').each(function () {
+		    tableHtml += `<th>${$(this).text()}</th>`;
+		});
+		tableHtml += '</tr>';
+	    });
+	    tableHtml += '</thead>';
+	    tableHtml += '<tbody>';
+	    $('#tabla_ped_tot tbody tr').each(function () {
+		tableHtml += '<tr>';
+		$(this).find('td').each(function () {
+		    tableHtml += `<td>${$(this).text()}</td>`;
+		});
+		tableHtml += '</tr>';
+	    });
+	    tableHtml += '</tbody>';
+	    tableHtml += '</table>';
 
+	    // Codifica el HTML combinado en base64
+	    document.getElementById('table_data').value = btoa(unescape(encodeURIComponent(tableHtml)));
+	});
     </script>
 </body>
 </html>
