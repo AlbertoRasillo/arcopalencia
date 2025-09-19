@@ -235,8 +235,8 @@
                 GROUP BY
                     pr.id_producto;
                 ");
-                echo"<table id='tabla'>";
-                echo"<tr>";
+                echo"<table id='tabla' class='display'>";
+                echo"<thead><tr>";
                     echo"<th>Socio</th>";
                     echo"<th>Producto</th>";
                     echo"<th>Cantidad</th>";
@@ -244,7 +244,7 @@
                     echo"<th>Fecha</th>";
                     echo"<th>Nº Pedido</th>";
                     echo"<th>Precio total de pedido</th>";
-                echo"</tr>";
+                echo"</tr></thead><tbody>";
                 while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
                 echo"<tr>";
                     echo"<td>$fila[nombre] $fila[apellidos]</td>";
@@ -268,7 +268,7 @@
                                         }
                 echo"</tr>";
                     }
-                echo"</table>";
+                echo"</tbody></table>";
                 echo "<br />";
                 echo"<table id='tabla_ped_tot'>";
                 echo"<th>TOTALES</th>";
@@ -333,8 +333,8 @@
                 GROUP BY
                     pr.id_producto;
                 ");
-                echo"<table id='tabla'>";
-                echo"<tr>";
+                echo"<table id='tabla' class='display'>";
+                echo"<thead><tr>";
                     echo"<th>Socio</th>";
                     echo"<th>Producto</th>";
                     echo"<th>Cantidad</th>";
@@ -342,7 +342,7 @@
                     echo"<th>Fecha</th>";
                     echo"<th>Nº Pedido</th>";
                     echo"<th>Precio total de pedido</th>";
-                echo"</tr>";
+                echo"</tr></thead><tbody>";
                 while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
                 echo"<tr>";
                     echo"<td>$fila[nombre] $fila[apellidos]</td>";
@@ -366,7 +366,7 @@
                                         }
                 echo"</tr>";
                     }
-                echo"</table>";
+                echo"</tbody></table>";
                 echo "<br />";
                 echo"<table id='tabla_ped_tot'>";
                 echo"<th>TOTALES</th>";
