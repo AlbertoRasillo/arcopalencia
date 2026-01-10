@@ -205,7 +205,7 @@
                     v.id_productor,
                     s.nombre AS nombre,
                     s.apellidos,
-                    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
+                    DATE_FORMAT(CONVERT_TZ(c.fecha, '+00:00', 'Europe/Madrid'), '%d-%m-%Y %T') AS fecha,
                     p.cantidad,
                     v.precio,
                     pr.nombre AS producto
