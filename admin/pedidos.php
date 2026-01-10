@@ -11,6 +11,8 @@
     <script src="../jquery/ui/jquery.ui.widget.js"></script>
     <script src="../jquery/ui/jquery.ui.datepicker.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="../css/estilo_admin2.css">
     <?php include("comprobar_acceso.php") ?>
     <?php include("../conectar.php") ?>
@@ -56,15 +58,17 @@
             <form method="GET">
                 Fecha inicio: <input type="text" name="fecha_inicio" autocomplete="off" id="fecha_inicio">
                 Fecha Fin: <input type="text" name="fecha_fin" autocomplete="off" id="fecha_fin">
-                Productor: <select name="id_productor" id="id_productor">
-                        <option value="vacio" selected="selected">Todos</option>
-                     <?php
-                         $idproductor=mysqli_query($con,"select distinct(id_productor),nombre,apellidos from productor");
-                         if($idproductor==true){
-                        while ($celda = mysqli_fetch_array($idproductor,MYSQLI_ASSOC)) {
-                         echo"<option value=$celda[id_productor]>".$celda['nombre']." ".$celda['apellidos']."</option>";
-                     } }?>
-                 </select>
+		Productor:
+		<select name="id_productor[]" id="id_productor" multiple>
+		    <?php
+			$idproductor=mysqli_query($con,"select distinct(id_productor),nombre,apellidos from productor");
+			if($idproductor){
+			    while ($celda = mysqli_fetch_array($idproductor,MYSQLI_ASSOC)) {
+				echo "<option value='{$celda['id_productor']}'>{$celda['nombre']} {$celda['apellidos']}</option>";
+			    }
+			}
+		    ?>
+		</select>
                  Nº pedido:<input type="text" name="num_pedido" id="num_pedido" value="0">
                 <input type="submit" value="Buscar">
             </form>
@@ -80,212 +84,118 @@
             </article>
             <article>
             <?php
-                if (isset($_GET['fecha_inicio'])and isset($_GET['fecha_fin']) and $_GET['fecha_fin']!=null and $_GET['id_productor']=='vacio'){
-                $fecha_inicio=$_GET['fecha_inicio'];
-                $fecha_fin=$_GET['fecha_fin'];
-                if ($fecha_inicio<=$fecha_fin) {
-                    $pedidos=mysqli_query($con,"
-                SELECT
-                    s.id_socio AS id_socio,
-                    c.id_cabecera_pedido,
-                    v.id_productor,
-                    s.nombre AS nombre,
-                    s.apellidos,
-                    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
-                    p.cantidad,
-                    v.precio,
-                    pr.nombre AS producto
-                FROM
-                    socio AS s
-                JOIN
-                    cabecera_pedido AS c ON s.id_socio = c.id_socio
-                JOIN
-                    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
-                JOIN
-                    vende AS v ON p.id_vende = v.id_vende
-                JOIN
-                    producto AS pr ON pr.id_producto = v.id_producto
-                WHERE
-                    c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
-                GROUP BY
-                    c.id_cabecera_pedido,
-                    pr.id_producto;
-                ");
-                    $total=mysqli_query($con,"
-                SELECT
-                    SUM(p.cantidad) AS sum_cant,
-                    pr.nombre AS prod_nom
-                FROM
-                    socio AS s
-                JOIN
-                    cabecera_pedido AS c ON s.id_socio = c.id_socio
-                JOIN
-                    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
-                JOIN
-                    vende AS v ON p.id_vende = v.id_vende
-                JOIN
-                    producto AS pr ON pr.id_producto = v.id_producto
-                WHERE
-                    c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
-                GROUP BY
-                    pr.id_producto;
-                ");
-                echo"<table id='tabla' class='display'>";
-                echo"<thead>";
-                echo"<tr>";
-                    echo"<th>Socio</th>";
-                    echo"<th>Producto</th>";
-                    echo"<th>Cantidad</th>";
-                    echo"<th>Precio</th>";
-                    echo"<th>Fecha</th>";
-                    echo"<th>Nº Pedido</th>";
-                    echo"<th>Precio total de pedido</th>";
-                echo"</tr>";
-                echo"</thead>";
-                $total_pedido = 0;
-                $pedido = NULL;
-                while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
-                echo"<tr>";
-                    echo"<td>$fila[nombre] $fila[apellidos]</td>";
-                    echo"<td>$fila[producto]</td>";
-                    echo"<td>$fila[cantidad]</td>";
-                    echo"<td>$fila[precio]</td>";
-                    echo"<td>$fila[fecha]</td>";
-                    echo"<td>$fila[id_cabecera_pedido]</td>";
-                    if (is_null($pedido)==true){
-                                           $pedido=$fila['id_cabecera_pedido'];
-                                           $total_pedido = $fila['precio']*$fila['cantidad'];
-                                           echo"<td>$total_pedido</td>";
-                    }elseif ($pedido==$fila['id_cabecera_pedido']){
-                                           $total_pedido += $fila['precio']*$fila['cantidad'];
-                                           echo"<td>$total_pedido</td>";
-                                        }elseif ($pedido!=$fila['id_cabecera_pedido']){
-                                           $total_pedido = 0;
-                       $total_pedido = $fila['precio']*$fila['cantidad'];
-                                           $pedido=$fila['id_cabecera_pedido'];
-                                           echo"<td>$total_pedido</td>";
-                                        }
-                echo"</tr>";
-                    }
-                echo"</table>";
-                echo "<br />";
-                echo"<table id='tabla_ped_tot'>";
-                echo"<th>TOTALES</th>";
-                echo"<tr>";
-                    echo"<th>Producto</th>";
-                    echo"<th>Cantidad</th>";
-                echo"</tr>";
-                while ($fila1 = mysqli_fetch_array($total,MYSQLI_ASSOC)){
-                echo"<tr>";
-                    echo"<td>$fila1[prod_nom]</td>";
-                    echo"<td>$fila1[sum_cant]</td>";
-                echo"</tr>";
-                }
-                echo"</table>";
-                }else{echo"<span id='error_fecha'>Introduce correctamente las fechas!</span>";}
+		if (isset($_GET['fecha_inicio']) && isset($_GET['fecha_fin'])) {
+		    $fecha_inicio = $_GET['fecha_inicio'];
+		    $fecha_fin    = $_GET['fecha_fin'];
 
-                }
-                if (isset($_GET['fecha_inicio']) and isset($_GET['fecha_fin']) and $_GET['id_productor']!='vacio'){
-                $fecha_inicio=$_GET['fecha_inicio'];
-                $fecha_fin=$_GET['fecha_fin'];
-                $id_productor=$_GET['id_productor'];
-                if ($fecha_inicio<=$fecha_fin) {
-                    $pedidos=mysqli_query($con,"
-                SELECT
-                    s.id_socio AS id_socio,
-                    c.id_cabecera_pedido,
-                    v.id_productor,
-                    s.nombre AS nombre,
-                    s.apellidos,
-                    DATE_FORMAT(c.fecha, '%d-%m-%Y %T') AS fecha,
-                    p.cantidad,
-                    v.precio,
-                    pr.nombre AS producto
-                FROM
-                    socio AS s
-                JOIN
-                    cabecera_pedido AS c ON s.id_socio = c.id_socio
-                JOIN
-                    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
-                JOIN
-                    vende AS v ON p.id_vende = v.id_vende
-                JOIN
-                    producto AS pr ON pr.id_producto = v.id_producto
-                WHERE
-                    v.id_productor = '$id_productor'
-                    AND c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY);
-                ");
-                    $total=mysqli_query($con,"
-                SELECT
-                    SUM(p.cantidad) AS sum_cant,
-                    pr.nombre AS prod_nom
-                FROM
-                    socio AS s
-                JOIN
-                    cabecera_pedido AS c ON s.id_socio = c.id_socio
-                JOIN
-                    pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
-                JOIN
-                    vende AS v ON p.id_vende = v.id_vende
-                JOIN
-                    producto AS pr ON pr.id_producto = v.id_producto
-                WHERE
-                    v.id_productor = '$id_productor'
-                    AND c.fecha BETWEEN '$fecha_inicio' AND DATE_ADD('$fecha_fin', INTERVAL 1 DAY)
-                GROUP BY
-                    pr.id_producto;
-                ");
-                echo"<table id='tabla' class='display'>";
-                echo"<thead><tr>";
-                    echo"<th>Socio</th>";
-                    echo"<th>Producto</th>";
-                    echo"<th>Cantidad</th>";
-                    echo"<th>Precio</th>";
-                    echo"<th>Fecha</th>";
-                    echo"<th>Nº Pedido</th>";
-                    echo"<th>Precio total de pedido</th>";
-                echo"</tr></thead><tbody>";
-                while ($fila = mysqli_fetch_array($pedidos,MYSQLI_ASSOC)){
-                echo"<tr>";
-                    echo"<td>$fila[nombre] $fila[apellidos]</td>";
-                    echo"<td>$fila[producto]</td>";
-                    echo"<td>$fila[cantidad]</td>";
-                    echo"<td>$fila[precio]</td>";
-                    echo"<td>$fila[fecha]</td>";
-                    echo"<td>$fila[id_cabecera_pedido]</td>";
-                    if (is_null($pedido)==true){
-                                           $pedido=$fila['id_cabecera_pedido'];
-                                           $total_pedido = $fila['precio']*$fila['cantidad'];
-                                           echo"<td>$total_pedido</td>";
-                    }elseif ($pedido==$fila['id_cabecera_pedido']){
-                                           $total_pedido += $fila['precio']*$fila['cantidad'];
-                                           echo"<td>$total_pedido</td>";
-                                        }elseif ($pedido!=$fila['id_cabecera_pedido']){
-                                           $total_pedido = 0;
-                       $total_pedido = $fila['precio']*$fila['cantidad'];
-                                           $pedido=$fila['id_cabecera_pedido'];
-                                           echo"<td>$total_pedido</td>";
-                                        }
-                echo"</tr>";
-                    }
-                echo"</tbody></table>";
-                echo "<br />";
-                echo"<table id='tabla_ped_tot'>";
-                echo"<th>TOTALES</th>";
-                echo"<tr>";
-                    echo"<th>Producto</th>";
-                    echo"<th>Cantidad</th>";
-                echo"</tr>";
-                while ($fila1 = mysqli_fetch_array($total,MYSQLI_ASSOC)){
-                echo"<tr>";
-                    echo"<td>$fila1[prod_nom]</td>";
-                    echo"<td>$fila1[sum_cant]</td>";
-                echo"</tr>";
-                }
-                echo"</table>";
-                }else{echo"<span id='error_fecha'>Introduce correctamente las fechas!</span>";}
+		    if ($fecha_inicio <= $fecha_fin) {
+			// Si se seleccionaron productores, es un array. Si no, es null.
+			$ids = !empty($_GET['id_productor']) ? $_GET['id_productor'] : [];
 
-                }
+			$where_productor = "";
+			if (!empty($ids)) {
+			    // Aseguramos enteros y armamos lista
+			    $ids = array_map('intval', $ids);
+			    $ids_list = implode(",", $ids);
+			    $where_productor = " AND v.id_productor IN ($ids_list)";
+			}
+
+			// --- Pedidos ---
+			$pedidos = mysqli_query($con,"
+			    SELECT
+				s.id_socio AS id_socio,
+				c.id_cabecera_pedido,
+				v.id_productor,
+				s.nombre AS nombre,
+				s.apellidos,
+				DATE_FORMAT(CONVERT_TZ(c.fecha, '+00:00', 'Europe/Madrid'), '%d-%m-%Y %T') AS fecha,
+				p.cantidad,
+				v.precio,
+				pr.nombre AS producto
+			    FROM socio AS s
+			    JOIN cabecera_pedido AS c ON s.id_socio = c.id_socio
+			    JOIN pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+			    JOIN vende AS v ON p.id_vende = v.id_vende
+			    JOIN producto AS pr ON pr.id_producto = v.id_producto
+			    WHERE c.fecha BETWEEN
+                                CONVERT_TZ('$fecha_inicio 00:00:00', 'Europe/Madrid', '+00:00') AND
+                                CONVERT_TZ('$fecha_fin 23:59:59', 'Europe/Madrid', '+00:00')
+                            $where_productor
+			");
+
+			// --- Totales ---
+			$total = mysqli_query($con,"
+			    SELECT
+				SUM(p.cantidad) AS sum_cant,
+				pr.nombre AS prod_nom
+			    FROM socio AS s
+			    JOIN cabecera_pedido AS c ON s.id_socio = c.id_socio
+			    JOIN pedido AS p ON c.id_cabecera_pedido = p.id_cabecera_pedido
+			    JOIN vende AS v ON p.id_vende = v.id_vende
+			    JOIN producto AS pr ON pr.id_producto = v.id_producto
+                            WHERE c.fecha BETWEEN
+                                CONVERT_TZ('$fecha_inicio 00:00:00', 'Europe/Madrid', '+00:00') AND
+                                CONVERT_TZ('$fecha_fin 23:59:59', 'Europe/Madrid', '+00:00')
+                            $where_productor
+                            GROUP BY pr.id_producto
+			");
+
+			// --- Tabla de resultados ---
+			echo "<table id='tabla' class='display'>";
+			echo "<thead><tr>";
+			echo "<th>Socio</th>";
+			echo "<th>Producto</th>";
+			echo "<th>Cantidad</th>";
+			echo "<th>Precio</th>";
+			echo "<th>Fecha</th>";
+			echo "<th>Nº Pedido</th>";
+			echo "<th>Precio total de pedido</th>";
+			echo "</tr></thead><tbody>";
+
+			$total_pedido = 0;
+			$pedido = NULL;
+
+			while ($fila = mysqli_fetch_array($pedidos, MYSQLI_ASSOC)) {
+			    echo "<tr>";
+			    echo "<td>{$fila['nombre']} {$fila['apellidos']}</td>";
+			    echo "<td>{$fila['producto']}</td>";
+			    echo "<td>{$fila['cantidad']}</td>";
+			    echo "<td>{$fila['precio']}</td>";
+			    echo "<td>{$fila['fecha']}</td>";
+			    echo "<td>{$fila['id_cabecera_pedido']}</td>";
+
+			    if (is_null($pedido)) {
+				$pedido = $fila['id_cabecera_pedido'];
+				$total_pedido = $fila['precio'] * $fila['cantidad'];
+				echo "<td>$total_pedido</td>";
+			    } elseif ($pedido == $fila['id_cabecera_pedido']) {
+				$total_pedido += $fila['precio'] * $fila['cantidad'];
+				echo "<td>$total_pedido</td>";
+			    } else {
+				$total_pedido = $fila['precio'] * $fila['cantidad'];
+				$pedido = $fila['id_cabecera_pedido'];
+				echo "<td>$total_pedido</td>";
+			    }
+			    echo "</tr>";
+			}
+
+			echo "</tbody></table>";
+			echo "<br />";
+			echo "<table id='tabla_ped_tot'>";
+			echo "<th>TOTALES</th>";
+			echo "<tr><th>Producto</th><th>Cantidad</th></tr>";
+			while ($fila1 = mysqli_fetch_array($total, MYSQLI_ASSOC)) {
+			    echo "<tr>";
+			    echo "<td>{$fila1['prod_nom']}</td>";
+			    echo "<td>{$fila1['sum_cant']}</td>";
+			    echo "</tr>";
+			}
+			echo "</table>";
+
+		    } else {
+			echo "<span id='error_fecha'>Introduce correctamente las fechas!</span>";
+		    }
+		}
                 if (isset($_GET['num_pedido']) and is_numeric($_GET['num_pedido']) and $_GET['num_pedido']!=0) {
                     $num_pedido=$_GET['num_pedido'];
                     $pedidos=mysqli_query($con,"
@@ -465,6 +375,14 @@
 	    // Codifica el HTML combinado en base64
 	    document.getElementById('table_data').value = btoa(unescape(encodeURIComponent(tableHtml)));
 	});
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#id_productor').select2({
+                placeholder: "Selecciona productores",
+		allowClear: true
+               });
+        });
     </script>
 </body>
 </html>
