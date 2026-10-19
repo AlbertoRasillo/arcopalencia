@@ -57,6 +57,7 @@
                                                 <option>Pan</option>
                                                 <option>Pasta</option>
                                                 <option>Verduras</option>
+                                                <option>Otros</option>
                                             </select></td>
              </tr>
              <tr>

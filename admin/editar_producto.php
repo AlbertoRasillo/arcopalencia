@@ -128,6 +128,7 @@
                                                 <option <?php if ($editarproducto['categoria']=='Pan') {echo'selected="selected"';} ?>>Pan</option>
                                                 <option <?php if ($editarproducto['categoria']=='Pasta') {echo'selected="selected"';} ?>>Pasta</option>
                                                 <option <?php if ($editarproducto['categoria']=='Verduras') {echo'selected="selected"';} ?>>Verduras</option>
+                                                <option <?php if ($editarproducto['categoria']=='Otros') {echo'selected="selected"';} ?>>Otros</option>
                                             </select></td>
              </tr>
              <tr>
