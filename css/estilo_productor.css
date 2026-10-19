@@ -65,3 +65,12 @@ th{
 	width: 450px;
 }
 #error_fecha{font-weight:bold;color:red;}
+/* Tabla de productos */
+#tabla tr:nth-child(2n+3) {
+    background: #BDBDBD;
+}
+#tabla {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse; /* Opcional: mejora la separación visual de la tabla */
+}
